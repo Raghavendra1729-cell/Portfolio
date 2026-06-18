@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ExternalLink } from "lucide-react";
-import { pageSectionVisibility } from "@/content/structure";
+
 import { RevealSection } from "@/components/Reveal";
 import TiltCard from "@/components/ui/TiltCard";
 import PageShell from "@/components/layout/PageShell";
@@ -30,12 +30,12 @@ export default async function AchievementsPage() {
     HackathonRecord[],
     CPProfileRecord[],
   ];
-  const visibility = pageSectionVisibility.achievements;
+
 
   return (
     <PageShell>
       <div className="space-y-12">
-        {visibility.competitiveProfiles && cpProfiles.length > 0 ? (
+        {cpProfiles.length > 0 ? (
           <section className="space-y-5">
             <RevealSection>
               <div className="section-badge">
@@ -98,8 +98,7 @@ export default async function AchievementsPage() {
           </section>
         ) : null}
 
-        {visibility.achievements ? (
-          <section className="space-y-5">
+        <section className="space-y-5">
             <RevealSection>
               <div className="section-badge">
                 <span>Achievements</span>
@@ -169,11 +168,9 @@ export default async function AchievementsPage() {
                 </RevealSection>
               )}
             </div>
-          </section>
-        ) : null}
+        </section>
 
-        {visibility.hackathons ? (
-          <section className="space-y-5">
+        <section className="space-y-5">
             <RevealSection>
               <div className="section-badge">
                 <span>Hackathons</span>
@@ -258,8 +255,7 @@ export default async function AchievementsPage() {
                 </RevealSection>
               )}
             </div>
-          </section>
-        ) : null}
+        </section>
       </div>
     </PageShell>
   );

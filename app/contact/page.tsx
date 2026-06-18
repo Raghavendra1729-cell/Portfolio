@@ -1,5 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
-import { pageSectionVisibility } from "@/content/structure";
+
 import { RevealSection } from "@/components/Reveal";
 import ResumeActions from "@/components/ResumeActions";
 import SocialLinks from "@/components/SocialLinks";
@@ -13,13 +13,12 @@ export async function generateMetadata() {
 
 export default async function ContactPage() {
   const siteSettings = await getSiteSettings();
-  const visibility = pageSectionVisibility.contact;
+
 
   return (
     <PageShell>
       <section className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-        {visibility.directLinks ? (
-          <div className="space-y-4">
+        <div className="space-y-4">
             {siteSettings.socialLinks.map((link, index) => (
               <RevealSection key={`${link.label}-${link.href}`} delay={index * 0.04}>
                 <a
@@ -44,12 +43,10 @@ export default async function ContactPage() {
                 </a>
               </RevealSection>
             ))}
-          </div>
-        ) : null}
+        </div>
 
         <div className="space-y-4">
-          {visibility.availability ? (
-            <RevealSection className="premium-surface premium-outline surface-cut p-6">
+          <RevealSection className="premium-surface premium-outline surface-cut p-6">
               <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500">
                 Availability
               </p>
@@ -58,7 +55,6 @@ export default async function ContactPage() {
               </h2>
               <p className="mt-4 text-sm leading-7 text-slate-300">{siteSettings.availability}</p>
             </RevealSection>
-          ) : null}
 
           <RevealSection className="premium-surface premium-outline surface-cut p-6">
             <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500">
@@ -67,14 +63,12 @@ export default async function ContactPage() {
             <SocialLinks links={siteSettings.socialLinks} variant="pill" className="mt-5" />
           </RevealSection>
 
-          {visibility.resume ? (
-            <RevealSection className="premium-surface premium-outline surface-cut p-6">
+          <RevealSection className="premium-surface premium-outline surface-cut p-6">
               <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500">
                 Resume
               </p>
               <ResumeActions siteSettings={siteSettings} className="mt-5" />
             </RevealSection>
-          ) : null}
         </div>
       </section>
     </PageShell>

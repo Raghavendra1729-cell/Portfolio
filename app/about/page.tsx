@@ -1,4 +1,3 @@
-import { pageSectionVisibility } from "@/content/structure";
 import { RevealSection } from "@/components/Reveal";
 import ResumeActions from "@/components/ResumeActions";
 import PageShell from "@/components/layout/PageShell";
@@ -15,8 +14,6 @@ export default async function AboutPage() {
     getData("education"),
   ])) as [Awaited<ReturnType<typeof getSiteSettings>>, EducationRecord[]];
 
-  const visibility = pageSectionVisibility.about;
-
   return (
     <PageShell>
       <section className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_22rem]">
@@ -32,8 +29,7 @@ export default async function AboutPage() {
             </div>
           </RevealSection>
 
-          {visibility.education ? (
-            <section className="space-y-5">
+          <section className="space-y-5">
               <RevealSection className="max-w-2xl">
                 <div className="section-badge">
                   <span>Education</span>
@@ -81,12 +77,10 @@ export default async function AboutPage() {
                 )}
               </div>
             </section>
-          ) : null}
         </div>
 
         <div className="space-y-4">
-          {visibility.profileSummary ? (
-            <RevealSection className="premium-surface premium-outline surface-cut p-6">
+          <RevealSection className="premium-surface premium-outline surface-cut p-6">
               <p className="font-mono text-[0.64rem] uppercase tracking-[0.28em] text-slate-500">
                 Snapshot
               </p>
@@ -94,16 +88,13 @@ export default async function AboutPage() {
               <p className="mt-2 text-sm text-slate-400">{siteSettings.location}</p>
               <p className="mt-4 text-sm leading-7 text-slate-300">{siteSettings.availability}</p>
             </RevealSection>
-          ) : null}
 
-          {visibility.resume ? (
-            <RevealSection className="premium-surface premium-outline surface-cut p-6">
+          <RevealSection className="premium-surface premium-outline surface-cut p-6">
               <p className="font-mono text-[0.64rem] uppercase tracking-[0.28em] text-slate-500">
                 Resume
               </p>
               <ResumeActions siteSettings={siteSettings} className="mt-4" />
             </RevealSection>
-          ) : null}
         </div>
       </section>
     </PageShell>

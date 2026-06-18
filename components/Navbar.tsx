@@ -8,6 +8,7 @@ import { ArrowUpRight, Menu, X } from "lucide-react";
 import { SECTION_TRANSITION } from "@/lib/motion";
 import type { SiteSettingsRecord } from "@/lib/data";
 import { cn } from "@/lib/utils";
+import { DIABLO_URL } from "@/lib/diablo";
 
 function isActivePath(pathname: string, href: string) {
   if (href === "/") {
@@ -23,6 +24,9 @@ export default function Navbar({ siteSettings }: { siteSettings: SiteSettingsRec
   const [scrolled, setScrolled] = useState(false);
   const reducedMotion = useReducedMotion();
   const navigationItems = siteSettings.navigationItems.filter((item) => item.enabled);
+  if (!navigationItems.some(item => item.href === "/profiles")) {
+    navigationItems.push({ href: "/profiles", label: "Profiles", enabled: true });
+  }
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 18);
@@ -91,20 +95,37 @@ export default function Navbar({ siteSettings }: { siteSettings: SiteSettingsRec
                   href={item.href}
                   onClick={() => setIsOpen(false)}
                   className={cn(
-                    "surface-cut inline-flex items-center border px-3 py-2 text-sm tracking-[-0.01em]",
-                    isActive
-                      ? "border-white/14 bg-white/[0.08] text-white"
-                      : "border-transparent bg-transparent text-slate-400 hover:border-white/10 hover:bg-white/[0.04] hover:text-white"
+                    "relative surface-cut inline-flex items-center px-3 py-2 text-sm tracking-[-0.01em] transition-colors",
+                    isActive ? "text-white" : "text-slate-400 hover:text-white"
                   )}
                   aria-current={isActive ? "page" : undefined}
                 >
-                  {item.label}
+                  {isActive && !reducedMotion && (
+                    <motion.span
+                      layoutId="nav-pill"
+                      className="absolute inset-0 z-[-1] border border-white/14 bg-white/[0.08]"
+                      transition={{ type: "spring", stiffness: 200, damping: 20, mass: 0.8 }}
+                    />
+                  )}
+                  {isActive && reducedMotion && (
+                    <span className="absolute inset-0 z-[-1] border border-white/14 bg-white/[0.08]" />
+                  )}
+                  <span className="relative z-10">{item.label}</span>
                 </Link>
               );
             })}
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
+            <a
+              href={DIABLO_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="diablo-pill surface-cut inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium"
+            >
+              <span className="tier-dot tier-dot--live" style={{ ["--tier" as string]: "var(--ember)" }} />
+              DIABLO
+            </a>
             {siteSettings.primaryResumeViewHref ? (
               <a
                 href={siteSettings.primaryResumeViewHref}
@@ -178,12 +199,23 @@ export default function Navbar({ siteSettings }: { siteSettings: SiteSettingsRec
                   })}
                 </div>
 
+                <a
+                  href={DIABLO_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => setIsOpen(false)}
+                  className="diablo-pill surface-cut mt-3 inline-flex w-full items-center justify-center gap-2 px-4 py-3 text-sm font-medium"
+                >
+                  <span className="tier-dot tier-dot--live" style={{ ["--tier" as string]: "var(--ember)" }} />
+                  Talk to DIABLO
+                </a>
+
                 {siteSettings.primaryResumeViewHref ? (
                   <a
                     href={siteSettings.primaryResumeViewHref}
                     target="_blank"
                     rel="noreferrer"
-                    className="surface-cut mt-4 inline-flex w-full items-center justify-center gap-2 border border-white/10 bg-white px-4 py-3 text-sm font-medium text-slate-950"
+                    className="surface-cut mt-3 inline-flex w-full items-center justify-center gap-2 border border-white/10 bg-white px-4 py-3 text-sm font-medium text-slate-950"
                   >
                     Resume
                     <ArrowUpRight className="h-4 w-4" />

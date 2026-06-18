@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { HOVER_SPRING } from "@/lib/motion";
+import { SPRING_PRESETS } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 type MagneticButtonProps = React.ComponentPropsWithoutRef<"button"> & {
@@ -50,7 +50,7 @@ export function MagneticButton({
       animate={reducedMotion ? undefined : { x: offset.x, y: offset.y }}
       whileHover={reducedMotion ? undefined : { y: -3, scale: 1.01 }}
       whileTap={{ scale: 0.985 }}
-      transition={HOVER_SPRING}
+      transition={SPRING_PRESETS.smooth}
       onMouseMove={handlePointerMove}
       onMouseLeave={handlePointerLeave}
       className={cn("inline-flex", wrapperClassName)}

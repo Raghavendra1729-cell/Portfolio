@@ -24,7 +24,6 @@ import CPProfile from "@/models/CPProfile";
 import Hackathon from "@/models/Hackathon";
 import SiteSettings from "@/models/SiteSettings";
 import LandingPage from "@/models/LandingPage";
-import { encodeSkillMap } from "@/lib/skill-map";
 
 type AdminModel = {
   create: (data: Record<string, unknown>) => Promise<unknown>;
@@ -91,15 +90,6 @@ function normalizeData(collection: ContentCollectionId, data: Record<string, unk
   const clonedData = { ...data };
   delete clonedData._id;
   delete clonedData.__v;
-
-  if (collection === "skill") {
-    clonedData.proficiency = encodeSkillMap<number>(
-      clonedData.proficiency as Record<string, number> | undefined
-    );
-    clonedData.focusSignals = encodeSkillMap<string>(
-      clonedData.focusSignals as Record<string, string> | undefined
-    );
-  }
 
   return clonedData;
 }

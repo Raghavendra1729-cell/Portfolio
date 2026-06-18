@@ -1006,8 +1006,6 @@ export function validateContentData(collection: ContentCollectionId, input: Reco
   if (collection === "skill") {
     const category = asTrimmedString(input.category);
     const items = asStringArray(input.items);
-    const proficiency = asNumberMap(input.proficiency);
-    const focusSignals = asStringMap(input.focusSignals);
     const order = asNumber(input.order);
 
     if (category.length < 2) {
@@ -1026,32 +1024,12 @@ export function validateContentData(collection: ContentCollectionId, input: Reco
       fieldErrors.items = "Duplicate skill items are not allowed.";
     }
 
-    if (Object.values(proficiency).some((value) => value < 0 || value > 100)) {
-      fieldErrors.proficiency = "Skill proficiency values must be between 0 and 100.";
-    }
-
-    const itemKeys = new Set(items.map((item) => item.toLowerCase()));
-
-    if (Object.keys(proficiency).some((key) => !itemKeys.has(key.toLowerCase()))) {
-      fieldErrors.proficiency = "Proficiency values must map to an item in this skill category.";
-    }
-
-    if (Object.values(focusSignals).some((value) => value.length > 40)) {
-      fieldErrors.focusSignals = "Focus signals must be 40 characters or fewer.";
-    }
-
-    if (Object.keys(focusSignals).some((key) => !itemKeys.has(key.toLowerCase()))) {
-      fieldErrors.focusSignals = "Focus signals must map to an item in this skill category.";
-    }
-
     return {
       success: Object.keys(fieldErrors).length === 0,
       fieldErrors,
       data: {
         category,
         items,
-        proficiency,
-        focusSignals,
         order,
       },
     };
@@ -1275,6 +1253,9 @@ export function validateContentData(collection: ContentCollectionId, input: Reco
 
   if (collection === "cpProfile") {
     const platform = asTrimmedString(input.platform);
+    const name = asTrimmedString(input.name);
+    const picture = asTrimmedString(input.picture);
+    const url = asTrimmedString(input.url);
     const username = asTrimmedString(input.username);
     const headline = asTrimmedString(input.headline);
     const summary = asTrimmedString(input.summary);
@@ -1295,6 +1276,18 @@ export function validateContentData(collection: ContentCollectionId, input: Reco
       fieldErrors.platform = "Platform must be at least 2 characters.";
     } else if (platform.length > 40) {
       fieldErrors.platform = "Platform must be 40 characters or fewer.";
+    }
+
+    if (name.length > 60) {
+      fieldErrors.name = "Name must be 60 characters or fewer.";
+    }
+
+    if (picture && !isValidUrl(picture)) {
+      fieldErrors.picture = "Picture URL must use a valid http:// or https:// URL.";
+    }
+
+    if (url && !isValidUrl(url)) {
+      fieldErrors.url = "URL must use a valid http:// or https:// URL.";
     }
 
     if (username.length > 60) {
@@ -1340,6 +1333,9 @@ export function validateContentData(collection: ContentCollectionId, input: Reco
       fieldErrors,
       data: {
         platform,
+        name,
+        picture,
+        url,
         username,
         headline,
         summary,

@@ -256,30 +256,6 @@ function getSiteMetadataValue(value: unknown) {
   };
 }
 
-function getNumberMap(value: unknown) {
-  if (!value || typeof value !== "object" || Array.isArray(value)) {
-    return {} as Record<string, number>;
-  }
-
-  return Object.fromEntries(
-    Object.entries(value)
-      .map(([key, item]) => [key, typeof item === "number" ? item : Number(item)] as const)
-      .filter(([key, item]) => key.trim() && Number.isFinite(item))
-  );
-}
-
-function getStringMap(value: unknown) {
-  if (!value || typeof value !== "object" || Array.isArray(value)) {
-    return {} as Record<string, string>;
-  }
-
-  return Object.fromEntries(
-    Object.entries(value)
-      .map(([key, item]) => [key, getStringValue(item).trim()] as const)
-      .filter(([key, item]) => key.trim() && item)
-  );
-}
-
 function getLinkLines(value: unknown) {
   if (!Array.isArray(value)) {
     return "";
@@ -372,46 +348,6 @@ function parseBadgeLines(value: unknown): BadgeField[] {
       };
     })
     .filter((item) => item.label);
-}
-
-function syncSkillMaps(itemsValue: unknown, data: Record<string, unknown>) {
-  const items = (Array.isArray(itemsValue) ? itemsValue : [])
-    .filter((item): item is string => typeof item === "string")
-    .map((item) => item.trim())
-    .filter(Boolean);
-
-  const itemKeyMap = new Map(items.map((item) => [item.toLowerCase(), item]));
-  const nextProficiency = Object.entries(getNumberMap(data.proficiency)).reduce<Record<string, number>>((acc, [key, value]) => {
-    const canonicalKey = itemKeyMap.get(key.trim().toLowerCase());
-
-    if (canonicalKey) {
-      acc[canonicalKey] = value;
-    }
-
-    return acc;
-  }, {});
-  const nextFocusSignals = Object.entries(getStringMap(data.focusSignals)).reduce<Record<string, string>>((acc, [key, value]) => {
-    const canonicalKey = itemKeyMap.get(key.trim().toLowerCase());
-
-    if (canonicalKey && value.trim()) {
-      acc[canonicalKey] = value.trim();
-    }
-
-    return acc;
-  }, {});
-
-  items.forEach((item) => {
-    if (!(item in nextProficiency)) {
-      nextProficiency[item] = 0;
-    }
-  });
-
-  return {
-    ...data,
-    items,
-    proficiency: nextProficiency,
-    focusSignals: nextFocusSignals,
-  };
 }
 
 function normalizeInitialData(collection: ContentCollectionId, data?: Record<string, unknown>) {
@@ -515,6 +451,9 @@ function normalizeInitialData(collection: ContentCollectionId, data?: Record<str
     if (collection === "cpProfile") {
       return {
         ...baseState,
+        name: "",
+        picture: "",
+        url: "",
         dataSource: "manual",
         isVisible: true,
         badgesText: "",
@@ -542,8 +481,6 @@ function normalizeInitialData(collection: ContentCollectionId, data?: Record<str
       return {
         ...baseState,
         items: [],
-        proficiency: {},
-        focusSignals: {},
       };
     }
 
@@ -554,8 +491,6 @@ function normalizeInitialData(collection: ContentCollectionId, data?: Record<str
       ...data,
       linksText: getLinkLines(data.links),
       badgesText: getBadgeLines(data.badges),
-      proficiency: getNumberMap(data.proficiency),
-      focusSignals: getStringMap(data.focusSignals),
       dataSource: collection === "cpProfile" ? getStringValue(data.dataSource) || "manual" : data.dataSource,
       isVisible: collection === "cpProfile" ? !("isVisible" in data) || getBooleanValue(data.isVisible) : data.isVisible,
       alternateResumeLinks: getObjectArrayValue<ResumeAlternateField>(data.alternateResumeLinks, ["label", "href"]),
@@ -581,10 +516,6 @@ function normalizeInitialData(collection: ContentCollectionId, data?: Record<str
       pageIntro: getPageIntroMap(data.pageIntro),
     };
 
-  if (collection === "skill") {
-    return syncSkillMaps(data.items, normalized);
-  }
-
   return normalized;
 }
 
@@ -601,9 +532,18 @@ function normalizeSubmissionData(collection: ContentCollectionId, data: Record<s
     delete nextData.badgesText;
   }
 
-  if (collection === "skill") {
-    return syncSkillMaps(nextData.items, nextData);
-  }
+  const numberFields = ["order", "teamSize", "solvedCount", "rating", "maxRating", "streak", "maxFeaturedProjects", "maxFeaturedAchievements"];
+  numberFields.forEach(field => {
+    if (field in nextData) {
+      const val = nextData[field];
+      if (typeof val === "string" && val.trim() !== "") {
+        const num = Number(val);
+        if (!isNaN(num)) {
+          nextData[field] = num;
+        }
+      }
+    }
+  });
 
   return nextData;
 }
@@ -745,9 +685,8 @@ const COLLECTION_TIPS: Record<ContentCollectionId, string[]> = {
     "Use images for certificates, screenshots, or event photos.",
   ],
   skill: [
-    "Add items first, then score proficiency and current focus per item.",
+    "Add items first.",
     "Display order controls how skill categories are arranged on the home page.",
-    "Use focus signals to show what you are actively using right now.",
     "Keep categories broad enough to group related tools cleanly.",
   ],
 };
@@ -964,34 +903,15 @@ function getSummaryData(collection: ContentCollectionId, formData: Record<string
   }
 
   if (collection === "skill") {
-    const proficiency = getNumberMap(formData.proficiency);
-    const focusSignals = getStringMap(formData.focusSignals);
-    const average =
-      skillItems.length > 0
-        ? Math.round(skillItems.reduce((sum, item) => sum + (proficiency[item] || 0), 0) / skillItems.length)
-        : 0;
-
     stats.push(
-      { label: "Items", value: String(skillItems.length) },
-      { label: "Avg", value: `${average}%` },
-      { label: "Focus", value: String(Object.keys(focusSignals).length) }
-    );
-    notes.push(
-      ...skillItems
-        .slice()
-        .sort((left, right) => (proficiency[right] || 0) - (proficiency[left] || 0))
-        .slice(0, 3)
-        .map((item) => `${item} ${proficiency[item] || 0}%`)
+      { label: "Items", value: String(skillItems.length) }
     );
   }
 
   return {
     title,
     subtitle,
-    description:
-      collection === "skill"
-        ? "This summary reflects the current category shape and confidence scores."
-        : "This summary reflects the content currently staged in the form.",
+    description: "This summary reflects the content currently staged in the form.",
     badges,
     stats,
     notes: notes.filter(Boolean),
@@ -1081,24 +1001,16 @@ export default function ItemForm({ initialData, collection, onSubmit, onCancel }
 
   const updateField = (name: string, value: unknown) => {
     setFormData((prev) => {
-      const nextData = { ...prev, [name]: value };
-      return collection === "skill" && name === "items" ? syncSkillMaps(value, nextData) : nextData;
+      return { ...prev, [name]: value };
     });
 
     setFieldErrors((prev) => {
-      const shouldClearSkillMapErrors = collection === "skill" && name === "items";
-
-      if (!prev[name] && !shouldClearSkillMapErrors) {
+      if (!prev[name]) {
         return prev;
       }
 
       const nextErrors = { ...prev };
       delete nextErrors[name];
-
-      if (shouldClearSkillMapErrors) {
-        delete nextErrors.proficiency;
-        delete nextErrors.focusSignals;
-      }
 
       return nextErrors;
     });
@@ -1225,27 +1137,6 @@ export default function ItemForm({ initialData, collection, onSubmit, onCancel }
   const handleReorderImage = (fromIndex: number, toIndex: number, field: string) => {
     const currentImages = Array.isArray(formData[field]) ? (formData[field] as string[]) : [];
     updateField(field, reorderItems(currentImages, fromIndex, toIndex));
-  };
-
-  const handleSkillNumberChange = (item: string, value: string) => {
-    const current = getNumberMap(formData.proficiency);
-    updateField("proficiency", {
-      ...current,
-      [item]: Number.isFinite(Number(value)) ? Number(value) : 0,
-    });
-  };
-
-  const handleSkillSignalChange = (item: string, value: string) => {
-    const current = getStringMap(formData.focusSignals);
-    const nextSignals = { ...current };
-
-    if (value.trim()) {
-      nextSignals[item] = value;
-    } else {
-      delete nextSignals[item];
-    }
-
-    updateField("focusSignals", nextSignals);
   };
 
   const validateForm = () => {
@@ -1829,11 +1720,18 @@ export default function ItemForm({ initialData, collection, onSubmit, onCancel }
               <FormSection title="Profile identity" description="Set the platform, handle, summary line, and public profile URL first.">
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                   <InputGroup label="Platform" name="platform" value={formData.platform} onChange={handleChange} required error={fieldErrors.platform} placeholder="LeetCode / Codeforces / CodeChef" />
-                  <InputGroup label="Username / Handle" name="username" value={formData.username} onChange={handleChange} error={fieldErrors.username} placeholder="your-handle" />
+                  <InputGroup label="Name" name="name" value={formData.name} onChange={handleChange} error={fieldErrors.name} placeholder="Your Display Name" />
                 </div>
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  <InputGroup label="Username / Handle" name="username" value={formData.username} onChange={handleChange} error={fieldErrors.username} placeholder="your-handle" />
                   <InputGroup label="Headline" name="headline" value={formData.headline} onChange={handleChange} placeholder="Guardian on LeetCode" error={fieldErrors.headline} />
-                  <InputGroup label="Profile URL" name="profileUrl" type="url" value={formData.profileUrl} onChange={handleChange} error={fieldErrors.profileUrl} placeholder="https://leetcode.com/..." />
+                </div>
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  <InputGroup label="Picture URL" name="picture" type="url" value={formData.picture} onChange={handleChange} error={fieldErrors.picture} placeholder="https://..." />
+                  <InputGroup label="Direct URL" name="url" type="url" value={formData.url} onChange={handleChange} error={fieldErrors.url} placeholder="https://..." />
+                </div>
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  <InputGroup label="Profile URL (Legacy)" name="profileUrl" type="url" value={formData.profileUrl} onChange={handleChange} error={fieldErrors.profileUrl} placeholder="https://leetcode.com/..." />
                 </div>
                 <TextAreaGroup label="Summary" name="summary" value={formData.summary} onChange={handleChange} error={fieldErrors.summary} placeholder="Short summary of current progress, ranking, or pattern." />
               </FormSection>
@@ -2016,7 +1914,7 @@ export default function ItemForm({ initialData, collection, onSubmit, onCancel }
 
           {collection === "skill" && (
             <>
-              <FormSection title="Category setup" description="Create the category and add comma-separated skill items to unlock the proficiency editor.">
+              <FormSection title="Category setup" description="Create the category and add comma-separated skill items.">
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-[1fr_auto]">
                   <InputGroup
                     label="Category Name"
@@ -2038,18 +1936,6 @@ export default function ItemForm({ initialData, collection, onSubmit, onCancel }
                   required
                   error={fieldErrors.items}
                   delimiter="comma"
-                />
-              </FormSection>
-
-              <FormSection title="Skill levels" description="Use the slider and numeric input together to reflect current proficiency and active focus.">
-                <SkillMapEditor
-                  items={skillItems}
-                  proficiency={getNumberMap(formData.proficiency)}
-                  focusSignals={getStringMap(formData.focusSignals)}
-                  onProficiencyChange={handleSkillNumberChange}
-                  onSignalChange={handleSkillSignalChange}
-                  proficiencyError={fieldErrors.proficiency}
-                  focusSignalsError={fieldErrors.focusSignals}
                 />
               </FormSection>
             </>
@@ -2476,106 +2362,6 @@ function GalleryGroup({
 
       <FileUpload label="Add Image" onUpload={(url) => onUpload(url, field)} />
       {error ? <p className="mt-2 text-sm text-destructive">{error}</p> : null}
-    </div>
-  );
-}
-
-function SkillMapEditor({
-  items,
-  proficiency,
-  focusSignals,
-  onProficiencyChange,
-  onSignalChange,
-  proficiencyError,
-  focusSignalsError,
-}: {
-  items: string[] | string;
-  proficiency: Record<string, number>;
-  focusSignals: Record<string, string>;
-  onProficiencyChange: (item: string, value: string) => void;
-  onSignalChange: (item: string, value: string) => void;
-  proficiencyError?: string;
-  focusSignalsError?: string;
-}) {
-  if (!Array.isArray(items) || items.length === 0) {
-    return (
-      <div className="rounded-lg border border-dashed border-border bg-muted/20 px-4 py-5 text-sm text-muted-foreground">
-        Add skill items first. Proficiency and focus inputs appear automatically for each item.
-      </div>
-    );
-  }
-
-  return (
-    <div className="space-y-4 rounded-lg border border-border/60 bg-muted/20 p-4">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <p className="text-sm font-medium text-foreground">Skill Levels</p>
-          <p className="mt-1 text-xs text-muted-foreground">Set a 0-100 proficiency score and an optional focus signal for each skill.</p>
-        </div>
-        <div className="rounded-full border border-border bg-background px-3 py-1 text-xs font-medium text-muted-foreground">
-          Average{" "}
-          {Math.round(
-            items.reduce((sum, item) => sum + (proficiency[item] ?? 0), 0) / Math.max(items.length, 1)
-          )}
-          %
-        </div>
-      </div>
-
-      <div className="space-y-3">
-        {items.map((item) => {
-          const value = proficiency[item] ?? 0;
-
-          return (
-            <div key={item} className="rounded-xl border bg-card p-4">
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <p className="text-sm font-medium text-foreground">{item}</p>
-                  <p className="mt-1 text-xs text-muted-foreground">Current skill emphasis for this item.</p>
-                </div>
-                <span className="rounded-full border border-primary/15 bg-primary/5 px-3 py-1 text-xs font-semibold text-primary">
-                  {value}%
-                </span>
-              </div>
-
-              <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-[1fr_84px] md:items-center">
-                <input
-                  type="range"
-                  min={0}
-                  max={100}
-                  step={1}
-                  value={value}
-                  onChange={(e) => onProficiencyChange(item, e.target.value)}
-                  className="h-2 w-full cursor-pointer appearance-none rounded-full bg-muted accent-primary"
-                />
-                <InputGroup
-                  label="Proficiency"
-                  name={`proficiency-${item}`}
-                  type="number"
-                  value={value}
-                  onChange={(e) => onProficiencyChange(item, e.target.value)}
-                />
-              </div>
-
-              <div className="mt-3 h-2 overflow-hidden rounded-full bg-muted">
-                <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${value}%` }} />
-              </div>
-
-              <div className="mt-4">
-                <InputGroup
-                  label="Focus Signal"
-                  name={`focus-${item}`}
-                  value={focusSignals[item] || ""}
-                  onChange={(e) => onSignalChange(item, e.target.value)}
-                  placeholder="Most used recently"
-                />
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {proficiencyError ? <p className="text-sm text-destructive">{proficiencyError}</p> : null}
-      {focusSignalsError ? <p className="text-sm text-destructive">{focusSignalsError}</p> : null}
     </div>
   );
 }

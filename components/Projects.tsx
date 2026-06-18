@@ -9,24 +9,10 @@ import { SECTION_TRANSITION } from "@/lib/motion";
 import TiltCard from "@/components/ui/TiltCard";
 
 function getProjectWindow(project: ProjectRecord) {
-  const dates = [project.startDate, project.endDate].filter(Boolean);
-
-  if (dates.length > 0) {
-    return dates.join(" - ");
-  }
-
   return project.featured ? "Featured project" : "Selected project";
 }
 
-function getPrimaryLink(project: ProjectRecord) {
-  const directLinks = [
-    project.link ? { name: "Live demo", url: project.link } : null,
-    project.repo ? { name: "Repository", url: project.repo } : null,
-    ...project.links,
-  ].filter((link): link is { name: string; url: string } => Boolean(link?.url));
 
-  return directLinks[0] || null;
-}
 
 function getLeadSummary(description: string) {
   return (
@@ -54,7 +40,6 @@ export default function Projects({ data }: { data: ProjectRecord[] }) {
   return (
     <div className="space-y-5">
       {data.map((project, index) => {
-        const primaryLink = getPrimaryLink(project);
         const projectWindow = getProjectWindow(project);
         const leadSummary = getLeadSummary(project.description);
         const imageFirst = index % 2 === 1;
@@ -63,8 +48,7 @@ export default function Projects({ data }: { data: ProjectRecord[] }) {
           <motion.div
             key={project._id}
             initial={reducedMotion ? undefined : { opacity: 0, y: 20 }}
-            whileInView={reducedMotion ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
+            animate={reducedMotion ? undefined : { opacity: 1, y: 0 }}
             transition={{ ...SECTION_TRANSITION, delay: index * 0.04 }}
           >
             <TiltCard className="h-full">
@@ -105,7 +89,7 @@ export default function Projects({ data }: { data: ProjectRecord[] }) {
 
                     <div className="mt-5 flex items-start justify-between gap-4">
                       <div>
-                        <h3 className="text-3xl font-semibold tracking-[-0.05em] text-white">
+                        <h3 className="font-display text-3xl font-semibold tracking-[-0.04em] text-white">
                           {project.title}
                         </h3>
                         <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300">
@@ -149,7 +133,7 @@ export default function Projects({ data }: { data: ProjectRecord[] }) {
                         {project.techStack.slice(0, 6).map((tech) => (
                           <span
                             key={tech}
-                            className="surface-cut border border-white/8 bg-white/[0.03] px-3 py-1.5 text-xs text-slate-300"
+                            className="surface-cut border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-slate-300 transition-colors hover:bg-white/10"
                           >
                             {tech}
                           </span>
@@ -160,20 +144,32 @@ export default function Projects({ data }: { data: ProjectRecord[] }) {
                     <div className="mt-6 flex flex-wrap gap-5 text-sm">
                       <Link
                         href={`/projects/${project._id}`}
-                        className="inline-flex items-center gap-2 text-white transition hover:text-slate-300"
+                        className="surface-cut inline-flex items-center gap-2 border border-white/10 bg-white px-5 py-2.5 text-sm font-medium text-slate-950 transition hover:bg-slate-200"
                       >
                         Open case study
                         <ArrowUpRight className="h-4 w-4" />
                       </Link>
 
-                      {primaryLink ? (
+                      {project.link ? (
                         <a
-                          href={primaryLink.url}
+                          href={project.link}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-2 text-slate-500 transition hover:text-white"
+                          className="surface-cut inline-flex items-center gap-2 border border-white/10 bg-white/[0.03] px-5 py-2.5 text-sm font-medium text-slate-300 transition hover:bg-white/10 hover:text-white"
                         >
-                          {primaryLink.name}
+                          Live demo
+                          <ArrowUpRight className="h-4 w-4" />
+                        </a>
+                      ) : null}
+
+                      {project.repo ? (
+                        <a
+                          href={project.repo}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="surface-cut inline-flex items-center gap-2 border border-white/10 bg-white/[0.03] px-5 py-2.5 text-sm font-medium text-slate-300 transition hover:bg-white/10 hover:text-white"
+                        >
+                          Repository
                           <ArrowUpRight className="h-4 w-4" />
                         </a>
                       ) : null}

@@ -4,7 +4,7 @@ import { motion, type Variants, useReducedMotion } from "framer-motion";
 import { type ReactNode } from "react";
 import { MOTION_EASE } from "@/lib/motion";
 
-type RevealVariant = "fade-up" | "fade-left" | "fade-right" | "scale";
+type RevealVariant = "fade-up" | "fade-left" | "fade-right" | "fade-down" | "scale" | "blur-up" | "blur-in";
 
 interface RevealProps {
   children: ReactNode;
@@ -16,11 +16,14 @@ interface RevealProps {
   className?: string;
 }
 
-const distanceMap: Record<RevealVariant, { x?: number; y?: number; scale?: number }> = {
+const distanceMap: Record<RevealVariant, { x?: number; y?: number; scale?: number; filter?: string; initialFilter?: string }> = {
   "fade-up": { y: 28 },
+  "fade-down": { y: -28 },
   "fade-left": { x: -32 },
   "fade-right": { x: 32 },
   scale: { y: 18, scale: 0.94 },
+  "blur-up": { y: 24, filter: "blur(0px)", initialFilter: "blur(8px)" },
+  "blur-in": { filter: "blur(0px)", initialFilter: "blur(12px)" },
 };
 
 function createItemVariants(
@@ -30,28 +33,36 @@ function createItemVariants(
 ): Variants {
   const offset = distanceMap[variant];
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const hiddenState: any = { opacity: 0 };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const visibleState: any = { opacity: 1, transition: {} };
+
+  if (!reducedMotion) {
+    if (offset.x !== undefined) hiddenState.x = offset.x;
+    if (offset.y !== undefined) hiddenState.y = offset.y;
+    if (offset.scale !== undefined) hiddenState.scale = offset.scale;
+    if (offset.initialFilter !== undefined) hiddenState.filter = offset.initialFilter;
+
+    visibleState.x = 0;
+    visibleState.y = 0;
+    visibleState.scale = 1;
+    if (offset.initialFilter !== undefined) visibleState.filter = offset.filter ?? "blur(0px)";
+
+    visibleState.transition = {
+      delay,
+      duration: 0.3,
+      ease: MOTION_EASE,
+    };
+  } else {
+    visibleState.transition = {
+      duration: 0.2, delay
+    };
+  }
+
   return {
-    hidden: reducedMotion
-      ? { opacity: 0 }
-      : {
-          opacity: 0,
-          x: offset.x ?? 0,
-          y: offset.y ?? 0,
-          scale: offset.scale ?? 1,
-        },
-    visible: {
-      opacity: 1,
-      x: 0,
-      y: 0,
-      scale: 1,
-      transition: reducedMotion
-        ? { duration: 0.2, delay }
-        : {
-            delay,
-            duration: 0.5,
-            ease: MOTION_EASE,
-          },
-    },
+    hidden: hiddenState,
+    visible: visibleState,
   };
 }
 
@@ -85,8 +96,7 @@ export function RevealSection({
     return (
       <motion.div
         initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2, margin: "0px 0px -10% 0px" }}
+        animate="visible"
         variants={createContainerVariants(staggerDelay, delay, reducedMotion)}
         className={className}
         {...props}
@@ -99,8 +109,7 @@ export function RevealSection({
   return (
     <motion.div
       initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.24, margin: "0px 0px -10% 0px" }}
+      animate="visible"
       variants={itemVariants}
       className={className}
       {...props}

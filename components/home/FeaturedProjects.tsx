@@ -55,7 +55,7 @@ export default function FeaturedProjects({
         </div>
         <Link
           href="/projects"
-          className="inline-flex items-center gap-2 text-sm text-slate-300 transition hover:text-white"
+          className="underline-grow inline-flex items-center gap-2 text-sm text-slate-300 transition hover:text-white"
         >
           Browse all projects
           <ArrowUpRight className="h-4 w-4" />
@@ -170,7 +170,7 @@ export default function FeaturedProjects({
           {secondaryProjects.map((project, index) => (
             <RevealSection key={project._id} delay={index * 0.05}>
               <TiltCard intensity={6}>
-                <article className="premium-surface premium-outline surface-cut rounded-[1.6rem] p-6">
+                <article className="premium-surface premium-outline surface-cut rounded-[1.6rem] p-6 transition glow-on-hover hover:border-white/16">
                   <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500">
                     {project.techStack.slice(0, 2).join(" • ") || "Project"}
                   </p>

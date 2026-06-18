@@ -21,6 +21,30 @@ const CPProfileSchema = new Schema(
       minlength: [2, "Platform must be at least 2 characters."],
       maxlength: [40, "Platform must be 40 characters or fewer."],
     },
+    name: {
+      type: String,
+      trim: true,
+      maxlength: [60, "Name must be 60 characters or fewer."],
+      default: "",
+    },
+    picture: {
+      type: String,
+      trim: true,
+      default: "",
+      validate: {
+        validator: (value: string) => !value || isValidHttpUrl(value),
+        message: "Picture URL must use a valid http:// or https:// URL.",
+      },
+    },
+    url: {
+      type: String,
+      trim: true,
+      default: "",
+      validate: {
+        validator: (value: string) => !value || isValidHttpUrl(value),
+        message: "URL must use a valid http:// or https:// URL.",
+      },
+    },
     username: {
       type: String,
       trim: true,

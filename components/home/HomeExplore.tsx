@@ -32,7 +32,7 @@ export default function HomeExplore({
             <Link
               key={`${item.href}-${item.title}`}
               href={item.href}
-              className="group flex items-start justify-between gap-6 py-6 transition"
+              className="group flex items-start justify-between gap-6 py-6 px-4 -mx-4 rounded-xl transition hover:bg-white/[0.02]"
             >
               <div className="flex gap-5">
                 <span className="w-8 font-mono text-[11px] uppercase tracking-[0.22em] text-slate-600">

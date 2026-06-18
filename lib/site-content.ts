@@ -128,6 +128,9 @@ export type LandingPageRecord = {
   secondaryCtaLabel: string;
   secondaryCtaHref: string;
   highlightCards: LandingHighlight[];
+  profilesEyebrow: string;
+  profilesTitle: string;
+  profilesDescription: string;
   projectsEyebrow: string;
   projectsTitle: string;
   projectsDescription: string;
@@ -199,7 +202,7 @@ export const fallbackSiteSettings: Omit<SiteSettingsRecord, "_id"> = {
         key,
         {
           eyebrow: config.label,
-          title: config.label,
+          title: key === "skills" ? "Current stack and core capabilities." : config.label,
           description: "",
           path: config.path,
         },
@@ -229,6 +232,9 @@ export const fallbackLandingPage: Omit<LandingPageRecord, "_id"> = {
   secondaryCtaLabel: "",
   secondaryCtaHref: "",
   highlightCards: [],
+  profilesEyebrow: "Profiles",
+  profilesTitle: "Competitive Programming & Coding Profiles",
+  profilesDescription: "My handles across various platforms.",
   projectsEyebrow: "Projects",
   projectsTitle: "Featured projects",
   projectsDescription: "",

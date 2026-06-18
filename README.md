@@ -1,3 +1,12 @@
+---
+title: Raghavendra Portfolio
+emoji: 🚀
+colorFrom: indigo
+colorTo: red
+sdk: docker
+app_port: 7860
+pinned: false
+---
 # Raghavendra Portfolio
 
 A premium dark, content-driven portfolio built with Next.js App Router, TypeScript, MongoDB, Cloudinary uploads, Framer Motion, and a protected admin CMS.

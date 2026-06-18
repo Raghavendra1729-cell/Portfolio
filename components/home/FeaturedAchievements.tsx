@@ -30,7 +30,7 @@ export default function FeaturedAchievements({
       <div className="grid gap-4 md:grid-cols-2">
         {achievements.map((achievement, index) => (
           <RevealSection key={achievement._id} delay={index * 0.04}>
-            <article className="premium-surface premium-outline surface-cut h-full p-6">
+            <article className="premium-surface premium-outline surface-cut h-full p-6 transition glow-on-hover hover:border-white/16">
               <div className="flex items-center justify-between gap-3">
                 <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500">
                   {[achievement.organization, achievement.date].filter(Boolean).join(" • ") || "Highlight"}
@@ -52,7 +52,7 @@ export default function FeaturedAchievements({
                   href={achievement.links[0].url}
                   target="_blank"
                   rel="noreferrer"
-                  className="mt-5 inline-flex items-center gap-2 text-sm text-slate-300 transition hover:text-white"
+                  className="mt-5 inline-flex items-center gap-2 text-sm text-slate-300 transition hover:text-white underline-grow w-fit"
                 >
                   {achievement.links[0].name}
                   <ArrowUpRight className="h-4 w-4" />

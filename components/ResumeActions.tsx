@@ -89,7 +89,7 @@ export default function ResumeActions({
         {hasPrimaryView ? (
           <MagneticButton
             asChild
-            className="surface-cut border-white/12 bg-white px-5 py-3 text-slate-950 shadow-[0_20px_44px_rgba(255,255,255,0.08)]"
+            className="surface-cut border-white/12 bg-white px-5 py-3 text-slate-950 shadow-[0_20px_44px_rgba(255,255,255,0.08)] transition hover:bg-slate-200"
           >
             <a href={siteSettings.primaryResumeViewHref} {...getAnchorProps(siteSettings.primaryResumeViewHref)}>
               {siteSettings.primaryResumeLabel || "View resume"}
@@ -101,7 +101,7 @@ export default function ResumeActions({
         {hasPrimaryDownload ? (
           <MagneticButton
             asChild
-            className="surface-cut border-white/10 bg-white/[0.03] px-5 py-3 text-white"
+            className="surface-cut border-white/10 bg-white/[0.03] px-5 py-3 text-white transition hover:bg-white/10"
           >
             <a
               href={siteSettings.primaryResumeDownloadHref}

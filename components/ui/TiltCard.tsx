@@ -7,6 +7,7 @@ import {
   useSpring,
 } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { SPRING_PRESETS } from "@/lib/motion";
 
 export default function TiltCard({
   children,
@@ -18,8 +19,8 @@ export default function TiltCard({
   intensity?: number;
 }) {
   const reducedMotion = useReducedMotion();
-  const rotateX = useSpring(0, { stiffness: 140, damping: 18, mass: 0.7 });
-  const rotateY = useSpring(0, { stiffness: 140, damping: 18, mass: 0.7 });
+  const rotateX = useSpring(0, SPRING_PRESETS.gentle);
+  const rotateY = useSpring(0, SPRING_PRESETS.gentle);
 
   const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (reducedMotion) {
@@ -45,7 +46,7 @@ export default function TiltCard({
       onPointerLeave={handlePointerLeave}
       style={reducedMotion ? undefined : { rotateX, rotateY, transformPerspective: 1200 }}
       whileHover={reducedMotion ? undefined : { y: -5, scale: 1.004 }}
-      transition={{ type: "spring", stiffness: 170, damping: 24, mass: 0.72 }}
+      transition={SPRING_PRESETS.smooth}
       className={cn("will-change-transform", className)}
     >
       {children}

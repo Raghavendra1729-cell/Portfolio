@@ -171,6 +171,11 @@ async function seedCollection(
 
 export async function runPortfolioSeed(): Promise<SeedResult> {
   await dbConnect();
+  
+  const mongoose = require("mongoose");
+  if (mongoose.connection.db) {
+    await mongoose.connection.db.dropDatabase();
+  }
 
   const steps: SeedStep[] = [];
 

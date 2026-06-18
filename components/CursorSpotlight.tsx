@@ -2,14 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
+import { SPRING_PRESETS } from "@/lib/motion";
 
 export default function CursorSpotlight() {
   const reducedMotion = useReducedMotion();
   const [enabled, setEnabled] = useState(false);
   const pointerX = useMotionValue(-220);
   const pointerY = useMotionValue(-220);
-  const x = useSpring(pointerX, { stiffness: 120, damping: 28, mass: 0.9 });
-  const y = useSpring(pointerY, { stiffness: 120, damping: 28, mass: 0.9 });
+  const x = useSpring(pointerX, SPRING_PRESETS.smooth);
+  const y = useSpring(pointerY, SPRING_PRESETS.smooth);
 
   useEffect(() => {
     if (reducedMotion) {

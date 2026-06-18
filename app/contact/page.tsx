@@ -3,7 +3,6 @@ import { pageSectionVisibility } from "@/content/structure";
 import { RevealSection } from "@/components/Reveal";
 import ResumeActions from "@/components/ResumeActions";
 import SocialLinks from "@/components/SocialLinks";
-import PageHeader from "@/components/layout/PageHeader";
 import PageShell from "@/components/layout/PageShell";
 import { getSiteSettings } from "@/lib/data";
 import { getSitePageMetadata } from "@/lib/metadata";
@@ -14,13 +13,10 @@ export async function generateMetadata() {
 
 export default async function ContactPage() {
   const siteSettings = await getSiteSettings();
-  const intro = siteSettings.pageIntro.contact;
   const visibility = pageSectionVisibility.contact;
 
   return (
     <PageShell>
-      <PageHeader eyebrow={intro.eyebrow} title={intro.title} description={intro.description} />
-
       <section className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
         {visibility.directLinks ? (
           <div className="space-y-4">
@@ -40,7 +36,7 @@ export default async function ContactPage() {
                       <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-slate-500">
                         {link.label}
                       </p>
-                      <p className="mt-3 text-xl font-semibold text-white">{link.value || link.label}</p>
+                      <p className="font-display mt-3 text-2xl font-semibold text-white">{link.value || link.label}</p>
                       <p className="mt-2 text-sm text-slate-500">{link.href}</p>
                     </div>
                   </div>
@@ -57,7 +53,7 @@ export default async function ContactPage() {
               <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500">
                 Availability
               </p>
-              <h2 className="mt-4 text-2xl font-semibold tracking-[-0.04em] text-white">
+              <h2 className="font-display mt-4 text-3xl font-semibold tracking-[-0.04em] text-white">
                 Open for focused engineering conversations.
               </h2>
               <p className="mt-4 text-sm leading-7 text-slate-300">{siteSettings.availability}</p>

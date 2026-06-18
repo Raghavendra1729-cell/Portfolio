@@ -65,10 +65,6 @@ const ProjectSchema = new Schema(
     images: {
       type: [String],
       default: [],
-      validate: {
-        validator: (value: string[]) => value.length <= 8 && value.every(isValidHttpUrl),
-        message: "Add up to 8 valid image URLs.",
-      },
     },
     featured: { type: Boolean, default: false },
     startDate: {

@@ -7,7 +7,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-space-grotesk);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-bricolage);
   --font-mono: var(--font-jetbrains-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -91,13 +92,27 @@
   --surface-shadow: rgba(0, 0, 0, 0.46);
   --surface-shadow-hard: rgba(4, 7, 12, 0.9);
   --accent-strong: rgba(236, 245, 255, 0.92);
-  --accent-soft: rgba(142, 236, 255, 0.16);
+  --accent-soft: rgba(45, 212, 191, 0.16);
   --accent-subtle: rgba(255, 255, 255, 0.05);
   --accent-text: rgba(229, 239, 255, 0.92);
-  --signal: rgba(142, 236, 255, 0.86);
-  --signal-soft: rgba(142, 236, 255, 0.1);
-  --signal-glow: rgba(142, 236, 255, 0.22);
+  /* "live / now" accent = the specialist tier teal */
+  --signal: rgba(45, 212, 191, 0.9);
+  --signal-soft: rgba(45, 212, 191, 0.1);
+  --signal-glow: rgba(45, 212, 191, 0.26);
   --noise-dot: rgba(255, 255, 255, 0.09);
+
+  /* Rating spectrum — the competitive-programming tier ladder.
+     Color only lives here; it is keyed to real rating bands, not mood.
+     The ladder ends at ember, which is where DIABLO (legendary) lives. */
+  --tier-newbie: #9aa3b2;
+  --tier-pupil: #3fb950;
+  --tier-specialist: #2dd4bf;
+  --tier-expert: #4f8bff;
+  --tier-candidate: #a371f7;
+  --tier-master: #ff9d2e;
+  --tier-legend: #ff5c38;
+  --ember: #ff5c38;
+  --ember-glow: rgba(255, 92, 56, 0.32);
   --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-snappy: cubic-bezier(0.16, 1, 0.3, 1);
   --motion-fast: 160ms;
@@ -116,10 +131,10 @@ body {
   min-height: 100vh;
   letter-spacing: -0.02em;
   background:
-    radial-gradient(circle at top, rgba(255, 255, 255, 0.045), transparent 24%),
-    radial-gradient(circle at 86% 10%, rgba(142, 236, 255, 0.035), transparent 16%),
-    radial-gradient(circle at 14% 18%, rgba(255, 255, 255, 0.035), transparent 12%),
-    linear-gradient(180deg, #040506 0%, #06080b 35%, #080b10 100%);
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.04), transparent 24%),
+    radial-gradient(circle at 86% 10%, rgba(45, 212, 191, 0.04), transparent 16%),
+    radial-gradient(circle at 14% 18%, rgba(79, 139, 255, 0.03), transparent 14%),
+    linear-gradient(180deg, #070a10 0%, #090d15 35%, #0a0e16 100%);
 }
 
 @layer base {
@@ -136,7 +151,7 @@ body {
   }
 
   ::selection {
-    background: rgba(142, 236, 255, 0.2);
+    background: rgba(45, 212, 191, 0.22);
     color: white;
   }
 
@@ -167,14 +182,14 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(142, 236, 255, 0.36);
+  background: rgba(45, 212, 191, 0.4);
 }
 
 .site-background {
   background:
-    radial-gradient(circle at top, rgba(255, 255, 255, 0.04) 0%, rgba(0, 0, 0, 0) 28%),
-    radial-gradient(circle at 82% 9%, rgba(142, 236, 255, 0.045) 0%, rgba(0, 0, 0, 0) 20%),
-    linear-gradient(180deg, #030405 0%, #06080b 48%, #030405 100%);
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.035) 0%, rgba(0, 0, 0, 0) 28%),
+    radial-gradient(circle at 82% 9%, rgba(45, 212, 191, 0.05) 0%, rgba(0, 0, 0, 0) 20%),
+    linear-gradient(180deg, #06090f 0%, #090d15 48%, #06090f 100%);
 }
 
 .site-grid {
@@ -390,6 +405,86 @@ body {
   text-wrap: balance;
 }
 
+.font-display {
+  font-family: var(--font-display), var(--font-sans), sans-serif;
+  letter-spacing: -0.04em;
+}
+
+/* Rating ladder primitives ------------------------------------------------ */
+.tier-dot {
+  position: relative;
+  display: inline-block;
+  height: 0.55rem;
+  width: 0.55rem;
+  border-radius: 999px;
+  background: var(--tier, var(--signal));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--tier, var(--signal)) 18%, transparent);
+}
+
+.tier-dot--live::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  border: 1px solid var(--tier, var(--signal));
+  opacity: 0.7;
+  animation: tier-ping 1.8s var(--ease-standard) infinite;
+}
+
+@keyframes tier-ping {
+  0% { transform: scale(1); opacity: 0.7; }
+  70%, 100% { transform: scale(2.4); opacity: 0; }
+}
+
+.tier-tag {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--tier, var(--signal));
+}
+
+/* The legendary tier — DIABLO --------------------------------------------- */
+.diablo-pill {
+  position: relative;
+  border: 1px solid color-mix(in srgb, var(--ember) 55%, transparent);
+  background: color-mix(in srgb, var(--ember) 12%, transparent);
+  color: #ffe7df;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--ember) 22%, transparent),
+    0 14px 40px var(--ember-glow);
+}
+
+.diablo-pill:hover {
+  background: color-mix(in srgb, var(--ember) 20%, transparent);
+  color: #fff;
+}
+
+.profile-card {
+  transition:
+    transform var(--motion-medium) var(--ease-standard),
+    border-color var(--motion-medium) var(--ease-standard),
+    box-shadow var(--motion-medium) var(--ease-standard);
+}
+
+a:hover > .profile-card,
+.profile-card:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--tier) 45%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 24px 60px rgba(3, 6, 12, 0.6),
+    0 0 0 1px color-mix(in srgb, var(--tier) 22%, transparent);
+}
+
+.diablo-aura::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 28% 0%, var(--ember-glow), transparent 58%);
+  pointer-events: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -401,5 +496,59 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* Micro-interactions & animations ----------------------------------------- */
+.underline-grow {
+  position: relative;
+  text-decoration: none;
+}
+
+.underline-grow::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+  transform-origin: bottom right;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.underline-grow:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.glow-on-hover {
+  transition: box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1), transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.glow-on-hover:hover {
+  box-shadow: 0 0 24px var(--signal-glow), inset 0 0 12px rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+}
+
+.shimmer-text {
+  background: linear-gradient(
+    110deg,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 1) 20%,
+    rgba(255, 255, 255, 0.7) 40%,
+    rgba(255, 255, 255, 0.3) 100%
+  );
+  background-size: 200% auto;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: 200% center;
   }
 }

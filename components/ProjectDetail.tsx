@@ -19,12 +19,6 @@ type StructuredDetails = {
 };
 
 function getProjectWindow(project: ProjectRecord) {
-  const dates = [project.startDate, project.endDate].filter(Boolean);
-
-  if (dates.length > 0) {
-    return dates.join(" - ");
-  }
-
   return project.featured ? "Featured project" : "Selected project";
 }
 
@@ -132,7 +126,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailProps) {
             <span>{project.featured ? "Flagship" : "Archive"}</span>
           </div>
 
-          <h1 className="mt-6 max-w-5xl text-balance text-4xl font-semibold tracking-[-0.08em] text-white sm:text-5xl lg:text-[4.8rem] lg:leading-[0.92]">
+          <h1 className="font-display mt-6 max-w-5xl text-balance text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl lg:text-[4.8rem] lg:leading-[0.92]">
             {project.title}
           </h1>
 
@@ -150,8 +144,8 @@ export default function ProjectDetailClient({ project }: ProjectDetailProps) {
                   rel="noreferrer"
                   className={
                     index === 0
-                      ? "surface-cut inline-flex items-center gap-2 border border-white/10 bg-white px-5 py-3 text-sm font-medium text-slate-950"
-                      : "surface-cut inline-flex items-center gap-2 border border-white/10 bg-white/[0.03] px-5 py-3 text-sm font-medium text-white"
+                      ? "surface-cut inline-flex items-center gap-2 border border-white/10 bg-white px-5 py-3 text-sm font-medium text-slate-950 transition hover:bg-slate-200"
+                      : "surface-cut inline-flex items-center gap-2 border border-white/10 bg-white/[0.03] px-5 py-3 text-sm font-medium text-white transition hover:bg-white/10"
                   }
                 >
                   {link.name}
@@ -162,30 +156,6 @@ export default function ProjectDetailClient({ project }: ProjectDetailProps) {
           ) : null}
         </div>
 
-        <div className="space-y-3">
-          <div className="metric-panel surface-cut rounded-[1.25rem] p-4">
-            <p className="font-mono text-[0.64rem] uppercase tracking-[0.28em] text-slate-500">
-              Timeline
-            </p>
-            <p className="mt-3 text-sm text-slate-200">{projectWindow}</p>
-          </div>
-          <div className="metric-panel surface-cut rounded-[1.25rem] p-4">
-            <p className="font-mono text-[0.64rem] uppercase tracking-[0.28em] text-slate-500">
-              Stack
-            </p>
-            <p className="mt-3 text-sm text-slate-200">
-              {project.techStack.length > 0 ? `${project.techStack.length} tools` : "Stack not specified"}
-            </p>
-          </div>
-          <div className="metric-panel surface-cut rounded-[1.25rem] p-4">
-            <p className="font-mono text-[0.64rem] uppercase tracking-[0.28em] text-slate-500">
-              External links
-            </p>
-            <p className="mt-3 text-sm text-slate-200">
-              {projectLinks.length > 0 ? `${projectLinks.length} references` : "No links available"}
-            </p>
-          </div>
-        </div>
       </section>
 
       {showcaseImage ? (
@@ -293,7 +263,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailProps) {
                 project.techStack.map((tech) => (
                   <span
                     key={tech}
-                    className="surface-cut border border-white/8 bg-white/[0.04] px-3 py-1.5 text-sm text-slate-200/85"
+                    className="surface-cut border border-white/10 bg-white/[0.04] px-3 py-1.5 text-sm font-medium text-slate-200/85 transition hover:bg-white/10"
                   >
                     {tech}
                   </span>

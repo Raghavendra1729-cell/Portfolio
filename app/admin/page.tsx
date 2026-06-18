@@ -351,9 +351,9 @@ export default function AdminPage() {
     () =>
       items.filter((item) => {
         const term = searchTerm.toLowerCase();
-        const title = item.title || item.role || item.institution || item.category || item.platform || "";
-        const subtitle = item.company || item.degree || item.organization || item.username || item.event || item.status || item.result || "";
-        return title.toLowerCase().includes(term) || subtitle.toLowerCase().includes(term);
+        const title = getItemTitle(item).toLowerCase();
+        const subtitle = getItemSubtitle(item).toLowerCase();
+        return title.includes(term) || subtitle.includes(term);
       }),
     [items, searchTerm]
   );
@@ -494,22 +494,32 @@ export default function AdminPage() {
                 {loading ? (
                   <AdminItemsSkeleton />
                 ) : items.length === 0 ? (
-                  <div className="rounded-xl border border-dashed bg-card py-20 text-center">
-                    <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted">
-                      <ActiveIcon className="h-8 w-8 text-muted-foreground" />
+                  <div className="animate-fade-up rounded-xl border border-dashed border-border bg-card/50 py-24 text-center transition-all hover:bg-card/80">
+                    <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary ring-1 ring-primary/20">
+                      <ActiveIcon className="h-8 w-8" />
                     </div>
-                    <h3 className="text-lg font-medium text-foreground">No {activeCollectionLabel.toLowerCase()} items yet</h3>
-                    <p className="mb-6 mt-1 text-sm text-muted-foreground">
+                    <h3 className="text-xl font-semibold tracking-tight text-foreground">No {activeCollectionLabel.toLowerCase()} found</h3>
+                    <p className="mx-auto mb-8 mt-2 max-w-sm text-sm text-muted-foreground">
                       {singletonCollection
-                        ? "Create the shared settings document to unlock centralized editing."
-                        : "Create your first entry to get started."}
+                        ? "Create the shared settings document to unlock centralized editing for this section."
+                        : "Your list is empty. Create your first entry to get started."}
                     </p>
-                    <button onClick={() => setIsCreating(true)} className="font-medium text-primary hover:underline">
-                      + {singletonCollection ? `Create ${activeCollectionSingular}` : `Create ${activeCollectionSingular}`}
+                    <button 
+                      onClick={() => setIsCreating(true)} 
+                      className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground shadow-sm transition-all hover:opacity-90 active:scale-[0.98]"
+                    >
+                      <Plus className="h-4 w-4" />
+                      {singletonCollection ? `Create ${activeCollectionSingular}` : `Create ${activeCollectionSingular}`}
                     </button>
                   </div>
                 ) : filteredItems.length === 0 ? (
-                  <div className="py-10 text-center text-muted-foreground">No items match your search.</div>
+                  <div className="animate-fade-up py-16 text-center">
+                    <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-muted">
+                      <Search className="h-6 w-6 text-muted-foreground" />
+                    </div>
+                    <h3 className="text-lg font-medium text-foreground">No matches found</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">We couldn&apos;t find anything matching &quot;{searchTerm}&quot;.</p>
+                  </div>
                 ) : (
                   filteredItems.map((item) => (
                     <div
@@ -552,12 +562,14 @@ export default function AdminPage() {
                         >
                           <Edit3 className="h-4 w-4" /> Edit
                         </button>
-                        <button
-                          onClick={() => setItemPendingDelete(item)}
-                          className="flex items-center gap-2 rounded-lg bg-destructive/10 px-4 py-2 text-sm font-medium text-destructive transition hover:bg-destructive/20"
-                        >
-                          <Trash2 className="h-4 w-4" /> Delete
-                        </button>
+                        {!singletonCollection && (
+                          <button
+                            onClick={() => setItemPendingDelete(item)}
+                            className="flex items-center gap-2 rounded-lg bg-destructive/10 px-4 py-2 text-sm font-medium text-destructive transition hover:bg-destructive/20"
+                          >
+                            <Trash2 className="h-4 w-4" /> Delete
+                          </button>
+                        )}
                       </div>
                     </div>
                   ))

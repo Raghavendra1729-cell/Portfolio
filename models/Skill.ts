@@ -1,49 +1,4 @@
 import { Schema, model, models } from "mongoose";
-import { decodeSkillMapKey } from "@/lib/skill-map";
-
-function getMapEntries<T>(value: Map<string, T> | Record<string, T> | undefined) {
-  if (!value) {
-    return [] as Array<[string, T]>;
-  }
-
-  return value instanceof Map ? Array.from(value.entries()) : Object.entries(value);
-}
-
-function normalizeKey(value: string) {
-  return value.trim().toLowerCase();
-}
-
-function getItemsForValidation(context: {
-  items?: string[];
-  getUpdate?: () => Record<string, unknown> | null;
-}) {
-  if (Array.isArray(context.items)) {
-    return context.items;
-  }
-
-  const update = typeof context.getUpdate === "function" ? context.getUpdate() : null;
-
-  if (!update || typeof update !== "object") {
-    return [] as string[];
-  }
-
-  const updateRecord = update as Record<string, unknown>;
-
-  if (Array.isArray(updateRecord.items)) {
-    return updateRecord.items.filter((item): item is string => typeof item === "string");
-  }
-
-  const setRecord =
-    "$set" in updateRecord && updateRecord.$set && typeof updateRecord.$set === "object"
-      ? (updateRecord.$set as Record<string, unknown>)
-      : null;
-
-  if (setRecord && Array.isArray(setRecord.items)) {
-    return setRecord.items.filter((item): item is string => typeof item === "string");
-  }
-
-  return [] as string[];
-}
 
 const SkillSchema = new Schema(
   {
@@ -71,58 +26,6 @@ const SkillSchema = new Schema(
         {
           validator: (value: string[]) => new Set(value.map((item) => item.trim().toLowerCase())).size === value.length,
           message: "Duplicate skill items are not allowed.",
-        },
-      ],
-    },
-    proficiency: {
-      type: Map,
-      of: Number,
-      default: {},
-      validate: [
-        {
-          validator: (value: Map<string, number> | Record<string, number>) => {
-            const entries = value instanceof Map ? Array.from(value.values()) : Object.values(value || {});
-            return entries.every((item) => Number.isFinite(item) && item >= 0 && item <= 100);
-          },
-          message: "Skill proficiency values must be between 0 and 100.",
-        },
-        {
-          validator: function (
-            this: { items?: string[]; getUpdate?: () => Record<string, unknown> | null },
-            value: Map<string, number> | Record<string, number>
-          ) {
-            const itemKeys = new Set(getItemsForValidation(this).map(normalizeKey));
-            return getMapEntries(value).every(([key]) =>
-              itemKeys.has(normalizeKey(decodeSkillMapKey(key)))
-            );
-          },
-          message: "Proficiency values must map to existing skill items.",
-        },
-      ],
-    },
-    focusSignals: {
-      type: Map,
-      of: String,
-      default: {},
-      validate: [
-        {
-          validator: (value: Map<string, string> | Record<string, string>) => {
-            const entries = value instanceof Map ? Array.from(value.values()) : Object.values(value || {});
-            return entries.every((item) => item.trim().length <= 40);
-          },
-          message: "Focus signals must be 40 characters or fewer.",
-        },
-        {
-          validator: function (
-            this: { items?: string[]; getUpdate?: () => Record<string, unknown> | null },
-            value: Map<string, string> | Record<string, string>
-          ) {
-            const itemKeys = new Set(getItemsForValidation(this).map(normalizeKey));
-            return getMapEntries(value).every(([key]) =>
-              itemKeys.has(normalizeKey(decodeSkillMapKey(key)))
-            );
-          },
-          message: "Focus signals must map to existing skill items.",
         },
       ],
     },

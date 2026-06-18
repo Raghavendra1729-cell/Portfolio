@@ -43,7 +43,7 @@ export default function Footer({ siteSettings }: { siteSettings: SiteSettingsRec
               {navigationItems
                 .filter((item) => item.href !== "/")
                 .map((item) => (
-                  <Link key={item.href} href={item.href} className="inline-flex items-center gap-2 hover:text-white">
+                  <Link key={item.href} href={item.href} className="underline-grow inline-flex items-center gap-2 hover:text-white w-fit pb-0.5">
                     <span className="h-1 w-1 rounded-full bg-white/18" />
                     {item.label}
                   </Link>

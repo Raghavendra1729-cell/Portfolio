@@ -12,7 +12,7 @@ export default function HomeContact({
 }) {
   return (
     <section className="grid gap-8 lg:grid-cols-[1.02fr_0.98fr]">
-      <RevealSection className="premium-surface premium-outline surface-cut p-6 sm:p-7">
+      <RevealSection className="premium-surface premium-outline surface-cut p-6 sm:p-7 transition glow-on-hover hover:border-white/16">
         <div className="section-badge">
           <span>{landingPage.contactEyebrow}</span>
         </div>
@@ -34,7 +34,7 @@ export default function HomeContact({
           </p>
           <SocialLinks links={siteSettings.socialLinks} variant="pill" className="mt-5" />
         </div>
-        <div className="metric-panel surface-cut rounded-[1.5rem] p-6">
+        <div className="metric-panel surface-cut rounded-[1.5rem] p-6 transition glow-on-hover hover:bg-white/[0.04]">
           <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500">
             Availability
           </p>

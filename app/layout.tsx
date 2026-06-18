@@ -1,4 +1,4 @@
-import { JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { Bricolage_Grotesque, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -7,8 +7,14 @@ import { Toaster } from "sonner";
 import { getSiteSettings } from "@/lib/data";
 import { getRootMetadata } from "@/lib/metadata";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
 });
@@ -33,7 +39,7 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={`dark ${spaceGrotesk.variable} ${jetBrainsMono.variable}`}
+      className={`dark ${bricolage.variable} ${inter.variable} ${jetBrainsMono.variable}`}
     >
       <body
         className="relative min-h-screen overflow-x-hidden bg-slate-950 font-sans text-white antialiased"
@@ -46,8 +52,8 @@ export default async function RootLayout({
         </a>
         <div className="site-background pointer-events-none fixed inset-0 -z-20" />
         <div className="site-grid pointer-events-none fixed inset-0 -z-10 opacity-60" />
-        <div className="pointer-events-none fixed inset-x-0 top-0 -z-10 h-72 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_34%),radial-gradient(circle_at_18%_12%,rgba(142,236,255,0.04),transparent_18%)]" />
-        <div className="pointer-events-none fixed inset-x-0 bottom-0 -z-10 h-[28rem] bg-[radial-gradient(circle_at_78%_82%,rgba(255,255,255,0.05),transparent_26%),radial-gradient(circle_at_24%_100%,rgba(142,236,255,0.03),transparent_32%)]" />
+        <div className="pointer-events-none fixed inset-x-0 top-0 -z-10 h-72 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_34%),radial-gradient(circle_at_18%_12%,rgba(45,212,191,0.04),transparent_18%)]" />
+        <div className="pointer-events-none fixed inset-x-0 bottom-0 -z-10 h-[28rem] bg-[radial-gradient(circle_at_78%_82%,rgba(255,255,255,0.05),transparent_26%),radial-gradient(circle_at_24%_100%,rgba(255,92,56,0.04),transparent_32%)]" />
         <div className="pointer-events-none fixed inset-0 -z-10 bg-[linear-gradient(180deg,rgba(2,4,8,0.02),rgba(2,4,8,0.22)_24%,rgba(2,4,8,0.92)_100%)]" />
         <CursorSpotlight />
 

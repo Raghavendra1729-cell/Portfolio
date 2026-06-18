@@ -17,7 +17,7 @@ export default function FeaturedHighlights({
       </div>
       <div className="grid gap-4 md:grid-cols-3">
         {cards.map((item, index) => (
-          <div key={item.title} className="metric-panel surface-cut rounded-[1.5rem] p-6">
+          <div key={item.title} className="metric-panel surface-cut rounded-[1.5rem] p-6 transition-all duration-300 hover:bg-white/[0.04] glow-on-hover">
             <p className="font-mono text-[0.64rem] uppercase tracking-[0.28em] text-slate-500">
               {String(index + 1).padStart(2, "0")}
             </p>

@@ -3,11 +3,9 @@ import { ExternalLink } from "lucide-react";
 import { pageSectionVisibility } from "@/content/structure";
 import { RevealSection } from "@/components/Reveal";
 import TiltCard from "@/components/ui/TiltCard";
-import PageHeader from "@/components/layout/PageHeader";
 import PageShell from "@/components/layout/PageShell";
 import {
   getData,
-  getSiteSettings,
   type AchievementRecord,
   type CPProfileRecord,
   type HackathonRecord,
@@ -23,24 +21,19 @@ export async function generateMetadata() {
 }
 
 export default async function AchievementsPage() {
-  const [siteSettings, achievements, hackathons, cpProfiles] = (await Promise.all([
-    getSiteSettings(),
+  const [achievements, hackathons, cpProfiles] = (await Promise.all([
     getData("achievement"),
     getData("hackathon"),
     getData("cpProfile"),
   ])) as [
-    Awaited<ReturnType<typeof getSiteSettings>>,
     AchievementRecord[],
     HackathonRecord[],
     CPProfileRecord[],
   ];
-  const intro = siteSettings.pageIntro.achievements;
   const visibility = pageSectionVisibility.achievements;
 
   return (
     <PageShell>
-      <PageHeader eyebrow={intro.eyebrow} title={intro.title} description={intro.description} />
-
       <div className="space-y-12">
         {visibility.competitiveProfiles && cpProfiles.length > 0 ? (
           <section className="space-y-5">
@@ -56,7 +49,7 @@ export default async function AchievementsPage() {
                   <article className="premium-surface premium-outline surface-cut h-full p-6">
                     <div className="flex items-start justify-between gap-4">
                       <div>
-                        <h3 className="text-xl font-semibold text-white">{profile.platform}</h3>
+                        <h3 className="font-display text-2xl font-semibold text-white">{profile.platform}</h3>
                         <p className="mt-2 text-sm text-slate-400">
                           {[profile.username, profile.rank].filter(Boolean).join(" • ")}
                         </p>
@@ -92,7 +85,7 @@ export default async function AchievementsPage() {
                         href={profile.profileUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-slate-300 transition hover:text-white"
+                        className="surface-cut mt-5 inline-flex items-center gap-2 border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm font-medium text-slate-300 transition hover:bg-white/10 hover:text-white"
                       >
                         Open profile
                         <ExternalLink className="h-4 w-4" />
@@ -139,7 +132,7 @@ export default async function AchievementsPage() {
 
                           <div className="p-6">
                             <div className="flex items-center justify-between gap-3">
-                              <h3 className="text-xl font-semibold text-white">{achievement.title}</h3>
+                              <h3 className="font-display text-2xl font-semibold tracking-[-0.03em] text-white">{achievement.title}</h3>
                               {achievement.featured ? (
                                 <span className="surface-cut border border-white/10 bg-white/[0.04] px-3 py-1 text-[11px] uppercase tracking-[0.22em] text-slate-200">
                                   Featured
@@ -158,7 +151,7 @@ export default async function AchievementsPage() {
                                 href={achievement.links[0].url}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-slate-300 transition hover:text-white"
+                                className="surface-cut mt-6 inline-flex items-center gap-2 border border-white/10 bg-white/[0.03] px-5 py-2.5 text-sm font-medium text-slate-300 transition hover:bg-white/10 hover:text-white"
                               >
                                 {achievement.links[0].name}
                                 <ExternalLink className="h-4 w-4" />
@@ -213,7 +206,7 @@ export default async function AchievementsPage() {
                           <div className="p-6">
                             <div className="flex items-start justify-between gap-4">
                               <div>
-                                <h3 className="text-xl font-semibold text-white">{hackathon.title}</h3>
+                                <h3 className="font-display text-2xl font-semibold tracking-[-0.03em] text-white">{hackathon.title}</h3>
                                 <p className="mt-2 text-sm text-slate-400">{getHackathonMeta(hackathon)}</p>
                               </div>
                               {hackathon.result ? (
@@ -234,7 +227,7 @@ export default async function AchievementsPage() {
                                 {hackathon.techStack.map((tech) => (
                                   <span
                                     key={tech}
-                                    className="surface-cut border border-white/8 bg-white/[0.03] px-3 py-1.5 text-xs text-slate-300"
+                                    className="surface-cut border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-slate-300 transition-colors hover:bg-white/10"
                                   >
                                     {tech}
                                   </span>
@@ -247,7 +240,7 @@ export default async function AchievementsPage() {
                                 href={hackathon.links[0].url}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-slate-300 transition hover:text-white"
+                                className="surface-cut mt-6 inline-flex items-center gap-2 border border-white/10 bg-white/[0.03] px-5 py-2.5 text-sm font-medium text-slate-300 transition hover:bg-white/10 hover:text-white"
                               >
                                 {hackathon.links[0].name}
                                 <ExternalLink className="h-4 w-4" />

@@ -118,6 +118,9 @@ export type CPBadgeRecord = {
 
 export type CPProfileRecord = BaseRecord & {
   platform: string;
+  name?: string;
+  picture?: string;
+  url?: string;
   username?: string;
   headline?: string;
   summary?: string;
@@ -486,6 +489,8 @@ function asStringMap(value: unknown) {
   );
 }
 
+
+
 export function normalizeCollectionItem<K extends CollectionId>(collection: K, item: unknown): CollectionMap[K] {
   const record = item && typeof item === "object" ? (item as Record<string, unknown>) : {};
 
@@ -569,6 +574,9 @@ export function normalizeCollectionItem<K extends CollectionId>(collection: K, i
       highlightCards: Array.isArray(record.highlightCards)
         ? asLandingHighlights(record.highlightCards)
         : fallbackLandingPage.highlightCards,
+      profilesEyebrow: asString(record.profilesEyebrow) || fallbackLandingPage.profilesEyebrow,
+      profilesTitle: asString(record.profilesTitle) || fallbackLandingPage.profilesTitle,
+      profilesDescription: asString(record.profilesDescription) || fallbackLandingPage.profilesDescription,
       projectsEyebrow: asString(record.projectsEyebrow) || fallbackLandingPage.projectsEyebrow,
       projectsTitle: asString(record.projectsTitle) || fallbackLandingPage.projectsTitle,
       projectsDescription:
@@ -697,6 +705,9 @@ export function normalizeCollectionItem<K extends CollectionId>(collection: K, i
       createdAt: asString(record.createdAt) || undefined,
       updatedAt: asString(record.updatedAt) || undefined,
       platform: asString(record.platform),
+      name: asString(record.name) || undefined,
+      picture: asString(record.picture) || undefined,
+      url: asString(record.url) || undefined,
       username: asString(record.username) || undefined,
       headline: asString(record.headline) || undefined,
       summary: asString(record.summary) || undefined,

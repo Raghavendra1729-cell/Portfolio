@@ -197,19 +197,11 @@ const SiteSettingsSchema = new Schema(
       type: String,
       trim: true,
       default: "",
-      validate: {
-        validator: (value: string) => !value || isValidExternalUrl(value),
-        message: "Primary resume view link must use a valid http:// or https:// URL.",
-      },
     },
     primaryResumeDownloadHref: {
       type: String,
       trim: true,
       default: "",
-      validate: {
-        validator: (value: string) => !value || isValidExternalUrl(value),
-        message: "Primary resume download link must use a valid http:// or https:// URL.",
-      },
     },
     alternateResumeLinks: {
       type: [ResumeAlternateLinkSchema],

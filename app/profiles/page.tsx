@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import type { Metadata } from "next";
 import Profiles from "@/components/home/Profiles";
 import PageShell from "@/components/layout/PageShell";

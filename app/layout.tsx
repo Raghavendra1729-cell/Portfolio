@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { Bricolage_Grotesque, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";

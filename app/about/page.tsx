@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { RevealSection } from "@/components/Reveal";
 import ResumeActions from "@/components/ResumeActions";
 import PageShell from "@/components/layout/PageShell";

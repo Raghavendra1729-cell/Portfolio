@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { RevealSection } from "@/components/Reveal";
 import Projects from "@/components/Projects";
 import PageShell from "@/components/layout/PageShell";

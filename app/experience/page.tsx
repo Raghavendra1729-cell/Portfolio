@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { RevealSection } from "@/components/Reveal";
 import PageShell from "@/components/layout/PageShell";
 import { getData, type ExperienceRecord } from "@/lib/data";

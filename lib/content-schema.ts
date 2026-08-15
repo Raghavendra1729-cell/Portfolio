@@ -456,30 +456,6 @@ function asHomeSections(value: unknown): HomeSection[] {
     .filter((item): item is HomeSection => Boolean(item));
 }
 
-function asNumberMap(value: unknown) {
-  if (!value || typeof value !== "object" || Array.isArray(value)) {
-    return {} as Record<string, number>;
-  }
-
-  return Object.fromEntries(
-    Object.entries(value)
-      .map(([key, mapValue]) => [asTrimmedString(key), asNumber(mapValue, Number.NaN)] as const)
-      .filter(([key, mapValue]) => key && Number.isFinite(mapValue))
-  );
-}
-
-function asStringMap(value: unknown) {
-  if (!value || typeof value !== "object" || Array.isArray(value)) {
-    return {} as Record<string, string>;
-  }
-
-  return Object.fromEntries(
-    Object.entries(value)
-      .map(([key, mapValue]) => [asTrimmedString(key), asTrimmedString(mapValue)] as const)
-      .filter(([key, mapValue]) => key && mapValue)
-  );
-}
-
 function isValidUrl(value: string) {
   try {
     const url = new URL(value);

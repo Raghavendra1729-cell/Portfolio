@@ -9,7 +9,6 @@ import PageShell from "@/components/layout/PageShell";
 import {
   getData,
   type AchievementRecord,
-  type CPProfileRecord,
   type HackathonRecord,
 } from "@/lib/data";
 import { getSitePageMetadata } from "@/lib/metadata";
@@ -23,14 +22,12 @@ export async function generateMetadata() {
 }
 
 export default async function AchievementsPage() {
-  const [achievements, hackathons, cpProfiles] = (await Promise.all([
+  const [achievements, hackathons] = (await Promise.all([
     getData("achievement"),
     getData("hackathon"),
-    getData("cpProfile"),
   ])) as [
     AchievementRecord[],
     HackathonRecord[],
-    CPProfileRecord[],
   ];
 
 

@@ -1,6 +1,5 @@
 import { getData } from "@/lib/data";
 import Image from "next/image";
-import Link from "next/link";
 
 export default async function ProfilesSection() {
   const profiles = await getData("cpProfile");

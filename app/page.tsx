@@ -1,6 +1,5 @@
 export const dynamic = "force-dynamic";
 
-import { Fragment, type ReactNode } from "react";
 import Hero from "@/components/home/Hero";
 import DiabloConsole from "@/components/home/DiabloConsole";
 import PageShell from "@/components/layout/PageShell";

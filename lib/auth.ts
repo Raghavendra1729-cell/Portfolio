@@ -81,7 +81,13 @@ export function verifyAdminSessionToken(token: string | undefined) {
 
   const expectedSignature = createSignature(`${header}.${payload}`);
 
-  if (signature !== expectedSignature) {
+  const suppliedBuffer = Buffer.from(signature);
+  const expectedBuffer = Buffer.from(expectedSignature);
+
+  if (
+    suppliedBuffer.length !== expectedBuffer.length ||
+    !timingSafeEqual(suppliedBuffer, expectedBuffer)
+  ) {
     return null;
   }
 

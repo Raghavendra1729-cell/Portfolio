@@ -19,7 +19,7 @@ export default function DiabloConsole() {
                 Talk to <span style={{ color: "var(--ember)" }}>DIABLO</span>
               </h2>
               <p className="text-base leading-7 text-slate-300 md:text-lg">
-                It's my personal AI assistant which knows about me. You can also talk to it about me.
+                It&apos;s my personal AI assistant which knows about me. You can also talk to it about me.
               </p>
               <div className="flex flex-wrap items-center gap-4 pt-2">
                 <a

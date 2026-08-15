@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 
 import { RevealSection } from "@/components/Reveal";
 import PageShell from "@/components/layout/PageShell";
-import { getData, getSiteSettings, type SkillRecord } from "@/lib/data";
+import { getData, type SkillRecord } from "@/lib/data";
 import { getSitePageMetadata } from "@/lib/metadata";
 
 export async function generateMetadata() {
@@ -10,11 +10,7 @@ export async function generateMetadata() {
 }
 
 export default async function SkillsPage() {
-  const [skills, siteSettings] = (await Promise.all([
-    getData("skill"),
-    getSiteSettings(),
-  ])) as [SkillRecord[], Awaited<ReturnType<typeof getSiteSettings>>];
-  const intro = siteSettings.pageIntro.skills;
+  const skills = (await getData("skill")) as SkillRecord[];
 
   return (
     <PageShell>

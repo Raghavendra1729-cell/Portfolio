@@ -68,6 +68,32 @@ export default async function AboutPage() {
                               </div>
                             ) : null}
                           </div>
+
+                          <div className="flex flex-col justify-between gap-3 border-t border-white/8 pt-4 lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
+                            <div className="space-y-2">
+                              {record.grade || record.gradeValue ? (
+                                <span className="surface-cut inline-flex items-center gap-2 border border-white/10 bg-white/[0.04] px-3 py-1 font-mono text-[11px] uppercase tracking-[0.2em] text-[color:var(--signal)]">
+                                  {record.gradeLabel || "Grade"}: {record.grade || record.gradeValue}
+                                </span>
+                              ) : null}
+                              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-slate-400">
+                                {[record.startDate, record.endDate].filter(Boolean).join(" – ") || "Aug 2024 – Aug 2028"}
+                              </p>
+                              {record.location ? (
+                                <p className="text-xs text-slate-500">{record.location}</p>
+                              ) : null}
+                            </div>
+                            {record.coursework && record.coursework.length > 0 ? (
+                              <div className="pt-2">
+                                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-slate-500">
+                                  Coursework
+                                </p>
+                                <p className="mt-1 line-clamp-2 text-xs text-slate-400">
+                                  {record.coursework.join(", ")}
+                                </p>
+                              </div>
+                            ) : null}
+                          </div>
                         </div>
                       </article>
                     </RevealSection>

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { listContentDocuments } from "@/lib/content-service";
+import { getData, type CPProfileRecord } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
 
@@ -14,7 +14,7 @@ type CPPlatformPayload = {
   solvedCount: number;
 };
 
-function getHeadline(record: Record<string, unknown>) {
+function getHeadline(record: CPProfileRecord) {
   const headline = typeof record.headline === "string" ? record.headline.trim() : "";
   const rank = typeof record.rank === "string" ? record.rank.trim() : "";
   const streak = typeof record.streak === "number" ? record.streak : 0;
@@ -39,7 +39,7 @@ function getHeadline(record: Record<string, unknown>) {
   return "Profile active";
 }
 
-function getSubheadline(record: Record<string, unknown>) {
+function getSubheadline(record: CPProfileRecord) {
   const summary = typeof record.summary === "string" ? record.summary.trim() : "";
   const maxRating = typeof record.maxRating === "number" ? record.maxRating : 0;
   const username = typeof record.username === "string" ? record.username.trim() : "";
@@ -59,7 +59,7 @@ function getSubheadline(record: Record<string, unknown>) {
   return "Profile summary pending.";
 }
 
-function getValue(record: Record<string, unknown>) {
+function getValue(record: CPProfileRecord) {
   const rating = typeof record.rating === "number" ? record.rating : 0;
   const maxRating = typeof record.maxRating === "number" ? record.maxRating : 0;
   const solvedCount = typeof record.solvedCount === "number" ? record.solvedCount : 0;
@@ -77,32 +77,28 @@ function getValue(record: Record<string, unknown>) {
 
 export async function GET() {
   try {
-    const records = (await listContentDocuments("cpProfile")) as Array<Record<string, unknown>>;
+    const records = await getData("cpProfile");
 
-    const platforms: CPPlatformPayload[] = records.map((record) => ({
-      platform: typeof record.platform === "string" ? record.platform : "Platform",
-      headline: getHeadline(record),
-      subheadline: getSubheadline(record),
-      value: getValue(record),
-      accent:
-        typeof record.accent === "string" && record.accent.trim()
-          ? record.accent
-          : "from-cyan-300/35 to-sky-500/10",
-      source: "tracked",
-      profileUrl: typeof record.profileUrl === "string" ? record.profileUrl : "",
-      solvedCount: typeof record.solvedCount === "number" ? record.solvedCount : 0,
-    }));
+    const platforms: CPPlatformPayload[] = records
+      .filter((p) => p.isVisible !== false)
+      .map((record) => ({
+        platform: record.platform || "Platform",
+        headline: getHeadline(record),
+        subheadline: getSubheadline(record),
+        value: getValue(record),
+        accent:
+          typeof record.accent === "string" && record.accent.trim()
+            ? record.accent
+            : "from-cyan-300/35 to-sky-500/10",
+        source: "tracked",
+        profileUrl: record.profileUrl || record.url || "",
+        solvedCount: record.solvedCount || 0,
+      }));
 
     const latestSync = records.reduce<string | null>((currentLatest, record) => {
-      const candidates = [record.lastSyncedAt, record.updatedAt]
-        .map((value) => {
-          if (value instanceof Date) {
-            return value.toISOString();
-          }
-
-          return typeof value === "string" ? value : null;
-        })
-        .filter((value): value is string => Boolean(value));
+      const candidates = [record.lastSyncedAt, record.updatedAt].filter(
+        (value): value is string => Boolean(value && typeof value === "string")
+      );
 
       if (candidates.length === 0) {
         return currentLatest;

@@ -1,9 +1,10 @@
 "use client";
 
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowUpRight, Workflow } from "lucide-react";
+import { ArrowUpRight, Search, Workflow, X } from "lucide-react";
 import { type ProjectRecord } from "@/lib/data";
 import { SECTION_TRANSITION } from "@/lib/motion";
 import TiltCard from "@/components/ui/TiltCard";
@@ -11,8 +12,6 @@ import TiltCard from "@/components/ui/TiltCard";
 function getProjectWindow(project: ProjectRecord) {
   return project.featured ? "Featured project" : "Selected project";
 }
-
-
 
 function getLeadSummary(description: string) {
   return (
@@ -23,8 +22,46 @@ function getLeadSummary(description: string) {
   );
 }
 
+const CATEGORIES = [
+  { id: "all", label: "All Work" },
+  { id: "ai", label: "AI & Agents" },
+  { id: "systems", label: "Systems & Networking" },
+  { id: "fullstack", label: "Full-Stack & PWAs" },
+  { id: "tools", label: "Tools & Extensions" },
+] as const;
+
+function matchCategory(project: ProjectRecord, catId: string): boolean {
+  if (catId === "all") return true;
+  const t = (project.title + " " + project.techStack.join(" ") + " " + project.description).toLowerCase();
+  if (catId === "ai")
+    return t.includes("agent") || t.includes("rag") || t.includes("vlm") || t.includes("gemini") || t.includes("qdrant");
+  if (catId === "systems")
+    return t.includes("server") || t.includes("socket") || t.includes("http") || t.includes("thread") || t.includes("typeahead") || t.includes("redis");
+  if (catId === "fullstack")
+    return t.includes("pwa") || t.includes("canteen") || t.includes("hostel") || t.includes("lost") || t.includes("react") || t.includes("next.js");
+  if (catId === "tools")
+    return t.includes("extension") || t.includes("cses") || t.includes("bookmark") || t.includes("template");
+  return true;
+}
+
 export default function Projects({ data }: { data: ProjectRecord[] }) {
   const reducedMotion = useReducedMotion();
+  const [activeCategory, setActiveCategory] = useState<string>("all");
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const filteredProjects = useMemo(() => {
+    return data.filter((project) => {
+      const matchesCat = matchCategory(project, activeCategory);
+      if (!matchesCat) return false;
+
+      if (!searchQuery.trim()) return true;
+      const q = searchQuery.toLowerCase().trim();
+      const titleMatch = project.title.toLowerCase().includes(q);
+      const stackMatch = project.techStack.some((tech) => tech.toLowerCase().includes(q));
+      const descMatch = project.description.toLowerCase().includes(q);
+      return titleMatch || stackMatch || descMatch;
+    });
+  }, [data, activeCategory, searchQuery]);
 
   if (!data.length) {
     return (
@@ -38,8 +75,76 @@ export default function Projects({ data }: { data: ProjectRecord[] }) {
   }
 
   return (
-    <div className="space-y-5">
-      {data.map((project, index) => {
+    <div className="space-y-8">
+      {/* Search and Category Filter Bar */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        {/* Category Pills */}
+        <div className="flex flex-wrap gap-2">
+          {CATEGORIES.map((cat) => {
+            const isActive = activeCategory === cat.id;
+            const count = data.filter((p) => matchCategory(p, cat.id)).length;
+
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`surface-cut inline-flex items-center gap-2 border px-3.5 py-2 text-xs font-medium transition ${
+                  isActive
+                    ? "border-white/20 bg-white text-slate-950"
+                    : "border-white/10 bg-white/[0.03] text-slate-400 hover:border-white/16 hover:text-white"
+                }`}
+              >
+                <span>{cat.label}</span>
+                <span
+                  className={`font-mono text-[10px] ${
+                    isActive ? "text-slate-600" : "text-slate-500"
+                  }`}
+                >
+                  {count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Search Input */}
+        <div className="relative min-w-[14rem] sm:max-w-xs">
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search stack, title, keywords..."
+            className="w-full rounded-md border border-white/10 bg-white/[0.04] py-2 pl-9 pr-8 text-xs text-white placeholder-slate-500 focus:border-white/20 focus:outline-none focus:ring-1 focus:ring-white/20"
+          />
+          {searchQuery ? (
+            <button
+              onClick={() => setSearchQuery("")}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
+          ) : null}
+        </div>
+      </div>
+
+      {filteredProjects.length === 0 ? (
+        <div className="surface-cut border border-white/8 bg-white/[0.025] p-10 text-center">
+          <p className="text-base text-slate-300">No projects match the current filter.</p>
+          <button
+            onClick={() => {
+              setActiveCategory("all");
+              setSearchQuery("");
+            }}
+            className="mt-4 inline-flex items-center gap-2 border border-white/10 bg-white/[0.05] px-4 py-2 text-xs font-medium text-white hover:bg-white/10"
+          >
+            Reset Filters
+          </button>
+        </div>
+      ) : null}
+
+      <div className="space-y-5">
+        {filteredProjects.map((project, index) => {
         const projectWindow = getProjectWindow(project);
         const leadSummary = getLeadSummary(project.description);
         const imageFirst = index % 2 === 1;
@@ -181,6 +286,7 @@ export default function Projects({ data }: { data: ProjectRecord[] }) {
           </motion.div>
         );
       })}
+      </div>
     </div>
   );
 }

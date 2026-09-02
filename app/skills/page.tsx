@@ -36,11 +36,22 @@ export default async function SkillsPage() {
 
                 <div className="mt-6 divide-y divide-white/6 border-t border-white/6">
                   {category.items.map((item) => {
+                    const signal = category.focusSignals?.[item];
+                    const prof = category.proficiency?.[item];
+
                     return (
-                      <div key={item} className="py-4 first:pt-5 last:pb-0">
+                      <div key={item} className="py-3.5 first:pt-4 last:pb-0">
                         <div className="flex items-center justify-between gap-3">
                           <p className="text-sm font-medium text-white">{item}</p>
+                          {prof ? (
+                            <span className="font-mono text-xs text-[color:var(--signal)]">
+                              {prof}%
+                            </span>
+                          ) : null}
                         </div>
+                        {signal ? (
+                          <p className="mt-1 text-xs leading-5 text-slate-400">{signal}</p>
+                        ) : null}
                       </div>
                     );
                   })}

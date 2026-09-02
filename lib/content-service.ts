@@ -90,7 +90,10 @@ export async function listContentDocuments(
     limit?: number;
   }
 ) {
-  await dbConnect();
+  const conn = await dbConnect();
+  if (!conn) {
+    return [];
+  }
 
   const config = COLLECTION_CONFIG[collection];
   const query = config.model
@@ -137,7 +140,10 @@ export async function getContentDocumentById(
   id: string,
   options?: { includeHidden?: boolean }
 ) {
-  await dbConnect();
+  const conn = await dbConnect();
+  if (!conn) {
+    return null;
+  }
 
   const config = COLLECTION_CONFIG[collection];
   const record = await config.model.findOne({ _id: id, ...getFilter(config, options?.includeHidden) }).lean();
@@ -148,7 +154,10 @@ export async function getContentDocumentById(
 }
 
 export async function getSingletonContentDocument(collection: ContentCollectionId) {
-  await dbConnect();
+  const conn = await dbConnect();
+  if (!conn) {
+    return null;
+  }
 
   const config = COLLECTION_CONFIG[collection];
   const record = await config.model.findOne(getFilter(config)).lean();

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowLeft, ArrowUpRight, ExternalLink } from "lucide-react";
@@ -90,8 +89,6 @@ export default function ProjectDetailClient({ project }: ProjectDetailProps) {
   const leadSummary =
     descriptionBlocks[0] ||
     "This project case study will be expanded with implementation details shortly.";
-  const showcaseImage = project.images[0];
-  const galleryImages = project.images.slice(1);
   const showProblemSection = Boolean(structured.problem && structured.problem !== leadSummary);
   const hasNarrative =
     showProblemSection ||
@@ -157,41 +154,6 @@ export default function ProjectDetailClient({ project }: ProjectDetailProps) {
         </div>
 
       </section>
-
-      {showcaseImage ? (
-        <section className="space-y-4">
-          <div className="premium-surface premium-outline surface-cut overflow-hidden">
-            <Image
-              src={showcaseImage}
-              alt={`${project.title} screenshot 1`}
-              width={1600}
-              height={1000}
-              unoptimized
-              className="h-full w-full object-cover"
-            />
-          </div>
-
-          {galleryImages.length > 0 ? (
-            <div className="grid gap-4 md:grid-cols-2">
-              {galleryImages.map((image, index) => (
-                <div
-                  key={`${image}-${index}`}
-                  className="premium-surface premium-outline surface-cut overflow-hidden"
-                >
-                  <Image
-                    src={image}
-                    alt={`${project.title} screenshot ${index + 2}`}
-                    width={1200}
-                    height={900}
-                    unoptimized
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-          ) : null}
-        </section>
-      ) : null}
 
       <section className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_20rem]">
         <div className="space-y-6">

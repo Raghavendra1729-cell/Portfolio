@@ -793,7 +793,7 @@ export const defaultProjects: ProjectRecord[] = [
       { name: "Live Demo", url: "https://raghav-1729-diablo-ai-agent.hf.space" },
       { name: "Repository", url: "https://github.com/Raghavendra1729-cell/Diablo" },
     ],
-    images: ["/diablo.png"],
+    images: [],
     featured: true,
     order: 0,
     startDate: "Jun 2026",
@@ -810,7 +810,7 @@ export const defaultProjects: ProjectRecord[] = [
     links: [
       { name: "Repository", url: "https://github.com/Raghavendra1729-cell/WEB-AUTOMATION-AGENT" },
     ],
-    images: ["/projects/web-automation-agent.svg"],
+    images: [],
     featured: true,
     order: 1,
     startDate: "Jun 2026",
@@ -826,7 +826,7 @@ export const defaultProjects: ProjectRecord[] = [
     links: [
       { name: "Repository", url: "https://github.com/Raghavendra1729-cell/Multithreaded-Http-Server" },
     ],
-    images: ["/projects/http-server.svg"],
+    images: [],
     featured: true,
     order: 2,
     startDate: "Sep 2025",
@@ -842,7 +842,7 @@ export const defaultProjects: ProjectRecord[] = [
     links: [
       { name: "Repository", url: "https://github.com/Raghavendra1729-cell/Khaao" },
     ],
-    images: ["/projects/khaao.png"],
+    images: [],
     featured: true,
     order: 3,
     startDate: "2025",
@@ -858,7 +858,7 @@ export const defaultProjects: ProjectRecord[] = [
     links: [
       { name: "Repository", url: "https://github.com/Raghavendra1729-cell/Typeahead-System" },
     ],
-    images: ["/projects/typeahead-system.svg"],
+    images: [],
     featured: false,
     order: 4,
     startDate: "2025",
@@ -874,7 +874,7 @@ export const defaultProjects: ProjectRecord[] = [
     links: [
       { name: "Repository", url: "https://github.com/Raghavendra1729-cell/SastaNotebookLm" },
     ],
-    images: ["/projects/sastanotebooklm.svg"],
+    images: [],
     featured: false,
     order: 5,
     startDate: "2025",
@@ -890,7 +890,7 @@ export const defaultProjects: ProjectRecord[] = [
     links: [
       { name: "Repository", url: "https://github.com/Raghavendra1729-cell/CSES-BOOKMARKER" },
     ],
-    images: ["/projects/cses-bookmarker.png"],
+    images: [],
     featured: false,
     order: 6,
     startDate: "2025",
@@ -903,12 +903,15 @@ export const defaultProjects: ProjectRecord[] = [
     description:
       "A scalable inventory management and asset tracking platform built for university hostels, ranking 7th out of 150+ teams in a campus hackathon.\n\nFeatures complaint ticketing, maintenance tracking, asset check-in/check-out with barcode scanning, and role-based student and warden dashboards.\n\nOptimized database indexes and query pipelines for rapid inventory audits across hundreds of campus rooms.",
     techStack: ["React", "Node.js", "Express.js", "MongoDB", "Tailwind CSS"],
-    links: [],
-    images: ["/projects/hostelhub.svg"],
+    links: [
+      { name: "Repository", url: "https://github.com/Raghavendra1729-cell" },
+    ],
+    images: [],
     featured: false,
     order: 7,
     startDate: "2025",
     endDate: "2025",
+    repo: "https://github.com/Raghavendra1729-cell",
   },
   {
     _id: "65aa55555555555555555555",
@@ -919,7 +922,7 @@ export const defaultProjects: ProjectRecord[] = [
     links: [
       { name: "Repository", url: "https://github.com/Raghavendra1729-cell/Lost-n-Found" },
     ],
-    images: ["/projects/lost-n-found.svg"],
+    images: [],
     featured: false,
     order: 8,
     startDate: "2024",

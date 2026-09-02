@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg_khaa" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#080b11" />
+      <stop offset="50%" stop-color="#0c1017" />
+      <stop offset="100%" stop-color="#06080d" />
+    </linearGradient>
+    <pattern id="grid_khaa" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="accent_khaa" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0.3" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#bg_khaa)" />
+  <rect width="800" height="500" fill="url(#grid_khaa)" />
+  <rect x="0" y="0" width="800" height="3" fill="url(#accent_khaa)" />
+
+  <rect x="24" y="24" width="752" height="452" rx="12" fill="rgba(255,255,255,0.015)" stroke="rgba(255,255,255,0.08)" />
+
+  <g transform="translate(48, 56)">
+    <rect x="0" y="0" width="8" height="8" rx="2" fill="#10b981" />
+    <text x="18" y="8" font-family="monospace" font-size="11" fill="#10b981" letter-spacing="2">GO 1.23 · REACT 18 · POSTGRESQL · SSE HUB</text>
+    <text x="0" y="38" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="22" font-weight="700" fill="#ffffff">Khaao - Canteen Pre-Order App</text>
+    <text x="0" y="62" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="13" fill="#94a3b8">Mobile-first installable PWA with real-time SSE updates, Go backend, and PostgreSQL</text>
+  </g>
+
+  <g transform="translate(48, 150)">
+
+    <g transform="translate(0, 0)">
+      <rect width="120" height="76" rx="8" fill="rgba(15,23,42,0.8)" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.2" />
+      <rect width="120" height="3" rx="1" fill="#10b981" />
+      <text x="12" y="32" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">Student PWA</text>
+      <text x="12" y="52" font-family="monospace" font-size="10" fill="#94a3b8">Google Auth</text>
+    </g>
+
+    <path d="M 125 38 L 139 38" stroke="#10b981" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.6"/>
+    <polygon points="140,35 145,38 140,41" fill="#10b981" opacity="0.8"/>
+
+    <g transform="translate(145, 0)">
+      <rect width="120" height="76" rx="8" fill="rgba(15,23,42,0.8)" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.2" />
+      <rect width="120" height="3" rx="1" fill="#10b981" />
+      <text x="12" y="32" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">Go Gin API</text>
+      <text x="12" y="52" font-family="monospace" font-size="10" fill="#94a3b8">Ticket Token</text>
+    </g>
+
+    <path d="M 270 38 L 284 38" stroke="#10b981" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.6"/>
+    <polygon points="285,35 290,38 285,41" fill="#10b981" opacity="0.8"/>
+
+    <g transform="translate(290, 0)">
+      <rect width="120" height="76" rx="8" fill="rgba(15,23,42,0.8)" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.2" />
+      <rect width="120" height="3" rx="1" fill="#10b981" />
+      <text x="12" y="32" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">SSE Hub</text>
+      <text x="12" y="52" font-family="monospace" font-size="10" fill="#94a3b8">In-Memory Fanout</text>
+    </g>
+
+    <path d="M 415 38 L 429 38" stroke="#10b981" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.6"/>
+    <polygon points="430,35 435,38 430,41" fill="#10b981" opacity="0.8"/>
+
+    <g transform="translate(435, 0)">
+      <rect width="120" height="76" rx="8" fill="rgba(15,23,42,0.8)" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.2" />
+      <rect width="120" height="3" rx="1" fill="#10b981" />
+      <text x="12" y="32" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">Demand Engine</text>
+      <text x="12" y="52" font-family="monospace" font-size="10" fill="#94a3b8">Prep Aggregation</text>
+    </g>
+
+    <path d="M 560 38 L 574 38" stroke="#10b981" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.6"/>
+    <polygon points="575,35 580,38 575,41" fill="#10b981" opacity="0.8"/>
+
+    <g transform="translate(580, 0)">
+      <rect width="120" height="76" rx="8" fill="rgba(15,23,42,0.8)" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.2" />
+      <rect width="120" height="3" rx="1" fill="#10b981" />
+      <text x="12" y="32" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">PostgreSQL</text>
+      <text x="12" y="52" font-family="monospace" font-size="10" fill="#94a3b8">FCFS Queue</text>
+    </g>
+
+  </g>
+
+  <g transform="translate(48, 255)">
+    <rect width="704" height="185" rx="8" fill="#05070a" stroke="rgba(255,255,255,0.08)" />
+    <rect x="0" y="0" width="704" height="28" rx="8" fill="rgba(255,255,255,0.03)" />
+    <circle cx="16" cy="14" r="4" fill="#ef4444" opacity="0.8"/>
+    <circle cx="28" cy="14" r="4" fill="#f59e0b" opacity="0.8"/>
+    <circle cx="40" cy="14" r="4" fill="#10b981" opacity="0.8"/>
+    <text x="56" y="18" font-family="monospace" font-size="10" fill="#64748b">execution-log</text>
+    <text x="20" y="54" font-family="monospace" font-size="11.5" fill="#38bdf8">$ cd backend &amp;&amp; go run ./cmd/server</text>
+    <text x="20" y="78" font-family="monospace" font-size="11.5" fill="#cbd5e1">[AUTH] Verified Google Workspace token -&gt; user: raghav@college.edu</text>
+    <text x="20" y="102" font-family="monospace" font-size="11.5" fill="#cbd5e1">[ORDER] Order #1042 placed: 2x Masala Dosa, 1x Cold Coffee</text>
+    <text x="20" y="126" font-family="monospace" font-size="11.5" fill="#cbd5e1">[SSE]  Broadcasted status update to student channel (Status: PREPARING)</text>
+    <text x="20" y="150" font-family="monospace" font-size="11.5" fill="#a7f3d0">[DONE] Kitchen dispatched order #1042 -&gt; FCFS pickup allocated [DONE]</text>
+  </g>
+</svg>

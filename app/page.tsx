@@ -4,7 +4,6 @@ import Hero from "@/components/home/Hero";
 import DiabloConsole from "@/components/home/DiabloConsole";
 import FeaturedProjects from "@/components/home/FeaturedProjects";
 import Profiles from "@/components/home/Profiles";
-import RatingCurve from "@/components/home/RatingCurve";
 import FeaturedAchievements from "@/components/home/FeaturedAchievements";
 import FeaturedHighlights from "@/components/home/FeaturedHighlights";
 import HomeExplore from "@/components/home/HomeExplore";
@@ -46,10 +45,7 @@ export default async function Home() {
             heading={landingPage.profilesTitle}
             description={landingPage.profilesDescription}
           />
-          <div className="grid gap-6 lg:grid-cols-[1fr_minmax(0,1fr)]">
-            <RatingCurve />
-            <FeaturedHighlights cards={landingPage.highlightCards} />
-          </div>
+          <FeaturedHighlights cards={landingPage.highlightCards} />
         </div>
 
         <FeaturedAchievements

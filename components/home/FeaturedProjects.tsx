@@ -170,34 +170,48 @@ export default function FeaturedProjects({
           {secondaryProjects.map((project, index) => (
             <RevealSection key={project._id} delay={index * 0.05}>
               <TiltCard intensity={6}>
-                <article className="premium-surface premium-outline surface-cut rounded-[1.6rem] p-6 transition glow-on-hover hover:border-white/16">
-                  <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500">
-                    {project.techStack.slice(0, 2).join(" • ") || "Project"}
-                  </p>
-                  <h3 className="mt-4 text-2xl font-semibold tracking-[-0.04em] text-white">
-                    {project.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-7 text-slate-400">
-                    {getLeadSummary(project.description)}
-                  </p>
-                  <div className="mt-5 flex items-center justify-between text-sm">
-                    <Link
-                      href={`/projects/${project._id}`}
-                      className="inline-flex items-center gap-2 text-white transition hover:text-slate-300"
-                    >
-                      View project
-                      <ArrowUpRight className="h-4 w-4" />
-                    </Link>
-                    {getPrimaryProjectLink(project) ? (
-                      <a
-                        href={getPrimaryProjectLink(project)?.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-slate-500 transition hover:text-white"
+                <article className="premium-surface premium-outline surface-cut overflow-hidden rounded-[1.6rem] transition glow-on-hover hover:border-white/16">
+                  {project.images[0] ? (
+                    <div className="relative aspect-[16/7] border-b border-white/8 bg-black/40">
+                      <Image
+                        src={project.images[0]}
+                        alt={`${project.title} preview`}
+                        fill
+                        unoptimized
+                        className="object-cover"
+                      />
+                      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,6,10,0.02),rgba(4,6,10,0.6)_100%)]" />
+                    </div>
+                  ) : null}
+                  <div className="p-6">
+                    <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-slate-500">
+                      {project.techStack.slice(0, 2).join(" • ") || "Project"}
+                    </p>
+                    <h3 className="mt-3 text-xl font-semibold tracking-[-0.04em] text-white">
+                      {project.title}
+                    </h3>
+                    <p className="mt-2.5 line-clamp-2 text-sm leading-6 text-slate-400">
+                      {getLeadSummary(project.description)}
+                    </p>
+                    <div className="mt-5 flex items-center justify-between text-sm">
+                      <Link
+                        href={`/projects/${project._id}`}
+                        className="inline-flex items-center gap-2 text-white transition hover:text-slate-300"
                       >
-                        {getPrimaryProjectLink(project)?.name}
-                      </a>
-                    ) : null}
+                        View project
+                        <ArrowUpRight className="h-4 w-4" />
+                      </Link>
+                      {getPrimaryProjectLink(project) ? (
+                        <a
+                          href={getPrimaryProjectLink(project)?.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-slate-500 transition hover:text-white"
+                        >
+                          {getPrimaryProjectLink(project)?.name}
+                        </a>
+                      ) : null}
+                    </div>
                   </div>
                 </article>
               </TiltCard>

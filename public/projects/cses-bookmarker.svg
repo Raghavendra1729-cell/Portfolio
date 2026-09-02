@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg_cses" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#080b11" />
+      <stop offset="50%" stop-color="#0c1017" />
+      <stop offset="100%" stop-color="#06080d" />
+    </linearGradient>
+    <pattern id="grid_cses" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="accent_cses" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.3" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#bg_cses)" />
+  <rect width="800" height="500" fill="url(#grid_cses)" />
+  <rect x="0" y="0" width="800" height="3" fill="url(#accent_cses)" />
+
+  <rect x="24" y="24" width="752" height="452" rx="12" fill="rgba(255,255,255,0.015)" stroke="rgba(255,255,255,0.08)" />
+
+  <g transform="translate(48, 56)">
+    <rect x="0" y="0" width="8" height="8" rx="2" fill="#f59e0b" />
+    <text x="18" y="8" font-family="monospace" font-size="11" fill="#f59e0b" letter-spacing="2">CHROME EXTENSION V3 · LOCAL STORAGE · GEMINI</text>
+    <text x="0" y="38" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="22" font-weight="700" fill="#ffffff">CSES-BOOKMARKER</text>
+    <text x="0" y="62" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="13" fill="#94a3b8">Chrome Extension Manifest V3 for bookmarks, solve timers, backups, and AI code review</text>
+  </g>
+
+  <g transform="translate(48, 150)">
+
+    <g transform="translate(0, 0)">
+      <rect width="120" height="76" rx="8" fill="rgba(15,23,42,0.8)" stroke="#f59e0b" stroke-opacity="0.4" stroke-width="1.2" />
+      <rect width="120" height="3" rx="1" fill="#f59e0b" />
+      <text x="12" y="32" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">CSES DOM</text>
+      <text x="12" y="52" font-family="monospace" font-size="10" fill="#94a3b8">Content Script</text>
+    </g>
+
+    <path d="M 125 38 L 139 38" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.6"/>
+    <polygon points="140,35 145,38 140,41" fill="#f59e0b" opacity="0.8"/>
+
+    <g transform="translate(145, 0)">
+      <rect width="120" height="76" rx="8" fill="rgba(15,23,42,0.8)" stroke="#f59e0b" stroke-opacity="0.4" stroke-width="1.2" />
+      <rect width="120" height="3" rx="1" fill="#f59e0b" />
+      <text x="12" y="32" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">Timer HUD</text>
+      <text x="12" y="52" font-family="monospace" font-size="10" fill="#94a3b8">Active Tracking</text>
+    </g>
+
+    <path d="M 270 38 L 284 38" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.6"/>
+    <polygon points="285,35 290,38 285,41" fill="#f59e0b" opacity="0.8"/>
+
+    <g transform="translate(290, 0)">
+      <rect width="120" height="76" rx="8" fill="rgba(15,23,42,0.8)" stroke="#f59e0b" stroke-opacity="0.4" stroke-width="1.2" />
+      <rect width="120" height="3" rx="1" fill="#f59e0b" />
+      <text x="12" y="32" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">Local Store</text>
+      <text x="12" y="52" font-family="monospace" font-size="10" fill="#94a3b8">Instant Sync</text>
+    </g>
+
+    <path d="M 415 38 L 429 38" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.6"/>
+    <polygon points="430,35 435,38 430,41" fill="#f59e0b" opacity="0.8"/>
+
+    <g transform="translate(435, 0)">
+      <rect width="120" height="76" rx="8" fill="rgba(15,23,42,0.8)" stroke="#f59e0b" stroke-opacity="0.4" stroke-width="1.2" />
+      <rect width="120" height="3" rx="1" fill="#f59e0b" />
+      <text x="12" y="32" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">JSON Backup</text>
+      <text x="12" y="52" font-family="monospace" font-size="10" fill="#94a3b8">Export / Import</text>
+    </g>
+
+    <path d="M 560 38 L 574 38" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.6"/>
+    <polygon points="575,35 580,38 575,41" fill="#f59e0b" opacity="0.8"/>
+
+    <g transform="translate(580, 0)">
+      <rect width="120" height="76" rx="8" fill="rgba(15,23,42,0.8)" stroke="#f59e0b" stroke-opacity="0.4" stroke-width="1.2" />
+      <rect width="120" height="3" rx="1" fill="#f59e0b" />
+      <text x="12" y="32" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">Gemini AI</text>
+      <text x="12" y="52" font-family="monospace" font-size="10" fill="#94a3b8">Code Review</text>
+    </g>
+
+  </g>
+
+  <g transform="translate(48, 255)">
+    <rect width="704" height="185" rx="8" fill="#05070a" stroke="rgba(255,255,255,0.08)" />
+    <rect x="0" y="0" width="704" height="28" rx="8" fill="rgba(255,255,255,0.03)" />
+    <circle cx="16" cy="14" r="4" fill="#ef4444" opacity="0.8"/>
+    <circle cx="28" cy="14" r="4" fill="#f59e0b" opacity="0.8"/>
+    <circle cx="40" cy="14" r="4" fill="#10b981" opacity="0.8"/>
+    <text x="56" y="18" font-family="monospace" font-size="10" fill="#64748b">execution-log</text>
+    <text x="20" y="54" font-family="monospace" font-size="11.5" fill="#cbd5e1">[EXT] Injected content script into cses.fi/problemset/task/1068</text>
+    <text x="20" y="78" font-family="monospace" font-size="11.5" fill="#cbd5e1">[TIMER] Started stopwatch: 14m 22s elapsed for 'Weird Algorithm'</text>
+    <text x="20" y="102" font-family="monospace" font-size="11.5" fill="#cbd5e1">[SYNC]  Stored solve notes and tag: [dynamic-programming, math]</text>
+    <text x="20" y="126" font-family="monospace" font-size="11.5" fill="#cbd5e1">[AI]    Reviewed C++ submission: 'O(N) time complexity verified. 0 warnings.'</text>
+  </g>
+</svg>

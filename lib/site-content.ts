@@ -256,9 +256,9 @@ export const fallbackLandingPage: Omit<LandingPageRecord, "_id"> = {
   singletonKey: "landing-page",
   heroEyebrow: "Scaler School of Technology · BITS Pilani",
   heroTitle: "Linga Seetha Rama Raghavendra",
-  heroSubtitle: "Software Engineer · Scalable Systems & Agentic AI",
+  heroSubtitle: "Software Engineer · Systems & Full-Stack",
   heroSummary:
-    "Building high-performance distributed systems, autonomous AI agents, and product-grade applications. TA Buddy at Scaler School of Technology.",
+    "Computer Science undergrad at Scaler School of Technology and BITS Pilani. I build low-level systems (like HTTP servers from raw sockets), full-stack web apps, and agentic AI workflows. Active competitive programmer with 900+ problems solved on LeetCode.",
   heroIntroLines: [
     "900+ LeetCode problems solved · 365-day active streak",
     "TA Buddy for DSA & OOP at Scaler School of Technology",
@@ -275,40 +275,40 @@ export const fallbackLandingPage: Omit<LandingPageRecord, "_id"> = {
   secondaryCtaHref: "https://raghav-1729-diablo-ai-agent.hf.space",
   highlightCards: [
     {
-      title: "Systems & Concurrency",
+      title: "Systems Programming",
       description:
-        "Engineered an HTTP/1.1 server from raw Python sockets with thread-pool concurrency, gzip compression, persistent connections, and a 54-test regression suite.",
+        "Built a multithreaded HTTP/1.1 server from raw Python sockets with thread pools, gzip streaming, keep-alive connections, and a 54-test regression suite.",
     },
     {
-      title: "Autonomous AI Agents",
+      title: "Full-Stack & Web Apps",
       description:
-        "Built Diablo (hybrid RAG voice/chat agent over 24+ repos with Cal.com integration) and vision-guided browser automation agents using 72B VLMs.",
+        "Built Khaao (a mobile-first canteen ordering PWA with Go SSE and PostgreSQL) and Diablo (a hybrid RAG voice and chat assistant connected to Cal.com).",
     },
     {
-      title: "Algorithmic Problem Solving",
+      title: "Algorithms & Problem Solving",
       description:
-        "900+ LeetCode problems solved, CodeChef 3-Star (1680), Codeforces Pupil (1210), and ranked 1st among all peers in Scaler's all-night CP contest.",
+        "Solved 900+ problems on LeetCode with a 365-day streak. CodeChef 3-Star (1680), Codeforces Pupil (1210), and 1st place in Scaler's all-night CP contest.",
     },
   ],
   profilesEyebrow: "Profiles",
   profilesTitle: "Competitive Programming & Coding Profiles",
   profilesDescription:
-    "Tracked contest ratings, solve counts, and repositories across LeetCode, Codeforces, CodeChef, AtCoder, and GitHub.",
+    "My profiles and activity across LeetCode, Codeforces, CodeChef, AtCoder, and GitHub.",
   projectsEyebrow: "Projects",
   projectsTitle: "Featured Projects",
   projectsDescription:
-    "Selected systems, AI agents, and full-stack web platforms built with focus on scale, performance, and real-world utility.",
+    "A selection of things I've built — from raw socket network servers to browser automation agents and mobile PWAs.",
   maxFeaturedProjects: 3,
   achievementsEyebrow: "Achievements",
   achievementsTitle: "Featured Achievements",
   achievementsDescription:
-    "Academic honors, competitive programming contest standings, and hackathon rankings.",
+    "Academic honors, competitive programming standings, and hackathon rankings.",
   maxFeaturedAchievements: 4,
   showAchievementsSection: true,
   exploreEyebrow: "Explore",
   exploreTitle: "Explore More",
   exploreDescription:
-    "Deep dives into my engineering experience, technical capabilities, education, and credentials.",
+    "Browse through my projects, work experience, skills, and background.",
   featuredSections: [
     {
       label: "Projects",

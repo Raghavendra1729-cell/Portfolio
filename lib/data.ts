@@ -842,7 +842,7 @@ export const defaultProjects: ProjectRecord[] = [
     links: [
       { name: "Repository", url: "https://github.com/Raghavendra1729-cell/Khaao" },
     ],
-    images: ["/projects/khaao.svg", "/projects/khaao.png"],
+    images: ["/projects/khaao.png"],
     featured: true,
     order: 3,
     startDate: "2025",
@@ -858,7 +858,7 @@ export const defaultProjects: ProjectRecord[] = [
     links: [
       { name: "Repository", url: "https://github.com/Raghavendra1729-cell/Typeahead-System" },
     ],
-    images: ["/projects/typeahead-system.svg", "/projects/typeahead.png"],
+    images: ["/projects/typeahead-system.svg"],
     featured: false,
     order: 4,
     startDate: "2025",
@@ -874,7 +874,7 @@ export const defaultProjects: ProjectRecord[] = [
     links: [
       { name: "Repository", url: "https://github.com/Raghavendra1729-cell/SastaNotebookLm" },
     ],
-    images: ["/projects/sastanotebooklm.svg", "/projects/sastanotebooklm.png"],
+    images: ["/projects/sastanotebooklm.svg"],
     featured: false,
     order: 5,
     startDate: "2025",
@@ -890,7 +890,7 @@ export const defaultProjects: ProjectRecord[] = [
     links: [
       { name: "Repository", url: "https://github.com/Raghavendra1729-cell/CSES-BOOKMARKER" },
     ],
-    images: ["/projects/cses-bookmarker.svg", "/projects/cses-bookmarker.png"],
+    images: ["/projects/cses-bookmarker.png"],
     featured: false,
     order: 6,
     startDate: "2025",

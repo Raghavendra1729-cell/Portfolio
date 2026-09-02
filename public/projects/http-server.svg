@@ -1,94 +1,101 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
   <defs>
-    <linearGradient id="bg_http" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#080b11" />
-      <stop offset="50%" stop-color="#0c1017" />
-      <stop offset="100%" stop-color="#06080d" />
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0d14" />
+      <stop offset="100%" stop-color="#05070a" />
     </linearGradient>
-    <pattern id="grid_http" width="32" height="32" patternUnits="userSpaceOnUse">
-      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M 24 0 L 0 0 0 24" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
     </pattern>
-    <linearGradient id="accent_http" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.9" />
-      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.3" />
-    </linearGradient>
   </defs>
 
-  <rect width="800" height="500" fill="url(#bg_http)" />
-  <rect width="800" height="500" fill="url(#grid_http)" />
-  <rect x="0" y="0" width="800" height="3" fill="url(#accent_http)" />
+  <rect width="800" height="500" fill="url(#bg)" />
+  <rect width="800" height="500" fill="url(#grid)" />
+  <rect x="20" y="20" width="760" height="460" rx="12" fill="rgba(255,255,255,0.01)" stroke="rgba(255,255,255,0.08)" />
 
-  <rect x="24" y="24" width="752" height="452" rx="12" fill="rgba(255,255,255,0.015)" stroke="rgba(255,255,255,0.08)" />
-
-  <g transform="translate(48, 56)">
-    <rect x="0" y="0" width="8" height="8" rx="2" fill="#f59e0b" />
-    <text x="18" y="8" font-family="monospace" font-size="11" fill="#f59e0b" letter-spacing="2">RAW SOCKETS · THREAD POOL · GZIP · 54 TESTS</text>
-    <text x="0" y="38" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="22" font-weight="700" fill="#ffffff">Multithreaded HTTP/1.1 Server</text>
-    <text x="0" y="62" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="13" fill="#94a3b8">Zero-dependency Python HTTP/1.1 server built entirely with raw BSD sockets & thread pools</text>
+  <!-- Top bar -->
+  <g transform="translate(40, 42)">
+    <text x="0" y="16" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="18" font-weight="700" fill="#ffffff">Multithreaded HTTP/1.1 Server</text>
+    <text x="0" y="38" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" fill="#94a3b8">Dependency-free Python server with thread pools, HTTP/1.1 parsing, and gzip compression</text>
   </g>
 
-  <g transform="translate(48, 150)">
+  <!-- Flow pipeline -->
+  <g transform="translate(40, 96)">
 
     <g transform="translate(0, 0)">
-      <rect width="120" height="76" rx="8" fill="rgba(15,23,42,0.8)" stroke="#f59e0b" stroke-opacity="0.4" stroke-width="1.2" />
-      <rect width="120" height="3" rx="1" fill="#f59e0b" />
-      <text x="12" y="32" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">Client TCP</text>
-      <text x="12" y="52" font-family="monospace" font-size="10" fill="#94a3b8">Raw Sockets</text>
+      <rect width="125" height="56" rx="6" fill="#0f172a" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
+      <text x="12" y="24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="600" fill="#e2e8f0">Raw TCP Socket</text>
+      <text x="12" y="42" font-family="ui-monospace, monospace" font-size="9.5" fill="#64748b">AF_INET / SOCK_STREAM</text>
     </g>
 
-    <path d="M 125 38 L 139 38" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.6"/>
-    <polygon points="140,35 145,38 140,41" fill="#f59e0b" opacity="0.8"/>
+    <path d="M 129 28 L 139 28" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" />
+    <polygon points="139,25 143,28 139,31" fill="rgba(255,255,255,0.4)" />
 
     <g transform="translate(145, 0)">
-      <rect width="120" height="76" rx="8" fill="rgba(15,23,42,0.8)" stroke="#f59e0b" stroke-opacity="0.4" stroke-width="1.2" />
-      <rect width="120" height="3" rx="1" fill="#f59e0b" />
-      <text x="12" y="32" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">ThreadPool</text>
-      <text x="12" y="52" font-family="monospace" font-size="10" fill="#94a3b8">Concurrent</text>
+      <rect width="125" height="56" rx="6" fill="#0f172a" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
+      <text x="12" y="24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="600" fill="#e2e8f0">ThreadPoolExecutor</text>
+      <text x="12" y="42" font-family="ui-monospace, monospace" font-size="9.5" fill="#64748b">Worker concurrency</text>
     </g>
 
-    <path d="M 270 38 L 284 38" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.6"/>
-    <polygon points="285,35 290,38 285,41" fill="#f59e0b" opacity="0.8"/>
+    <path d="M 274 28 L 284 28" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" />
+    <polygon points="284,25 288,28 284,31" fill="rgba(255,255,255,0.4)" />
 
     <g transform="translate(290, 0)">
-      <rect width="120" height="76" rx="8" fill="rgba(15,23,42,0.8)" stroke="#f59e0b" stroke-opacity="0.4" stroke-width="1.2" />
-      <rect width="120" height="3" rx="1" fill="#f59e0b" />
-      <text x="12" y="32" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">HTTP Parser</text>
-      <text x="12" y="52" font-family="monospace" font-size="10" fill="#94a3b8">RFC 9112</text>
+      <rect width="125" height="56" rx="6" fill="#0f172a" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
+      <text x="12" y="24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="600" fill="#e2e8f0">HTTP Parser</text>
+      <text x="12" y="42" font-family="ui-monospace, monospace" font-size="9.5" fill="#64748b">RFC 9112 GET/POST</text>
     </g>
 
-    <path d="M 415 38 L 429 38" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.6"/>
-    <polygon points="430,35 435,38 430,41" fill="#f59e0b" opacity="0.8"/>
+    <path d="M 419 28 L 429 28" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" />
+    <polygon points="429,25 433,28 429,31" fill="rgba(255,255,255,0.4)" />
 
     <g transform="translate(435, 0)">
-      <rect width="120" height="76" rx="8" fill="rgba(15,23,42,0.8)" stroke="#f59e0b" stroke-opacity="0.4" stroke-width="1.2" />
-      <rect width="120" height="3" rx="1" fill="#f59e0b" />
-      <text x="12" y="32" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">Compression</text>
-      <text x="12" y="52" font-family="monospace" font-size="10" fill="#94a3b8">gzip Stream</text>
+      <rect width="125" height="56" rx="6" fill="#0f172a" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
+      <text x="12" y="24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="600" fill="#e2e8f0">gzip Compression</text>
+      <text x="12" y="42" font-family="ui-monospace, monospace" font-size="9.5" fill="#64748b">zlib streaming</text>
     </g>
 
-    <path d="M 560 38 L 574 38" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.6"/>
-    <polygon points="575,35 580,38 575,41" fill="#f59e0b" opacity="0.8"/>
+    <path d="M 564 28 L 574 28" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" />
+    <polygon points="574,25 578,28 574,31" fill="rgba(255,255,255,0.4)" />
 
     <g transform="translate(580, 0)">
-      <rect width="120" height="76" rx="8" fill="rgba(15,23,42,0.8)" stroke="#f59e0b" stroke-opacity="0.4" stroke-width="1.2" />
-      <rect width="120" height="3" rx="1" fill="#f59e0b" />
-      <text x="12" y="32" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#ffffff">Security</text>
-      <text x="12" y="52" font-family="monospace" font-size="10" fill="#94a3b8">Traversal Guard</text>
+      <rect width="125" height="56" rx="6" fill="#0f172a" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
+      <text x="12" y="24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="600" fill="#e2e8f0">Directory Guard</text>
+      <text x="12" y="42" font-family="ui-monospace, monospace" font-size="9.5" fill="#64748b">Path normalization</text>
     </g>
 
   </g>
 
-  <g transform="translate(48, 255)">
-    <rect width="704" height="185" rx="8" fill="#05070a" stroke="rgba(255,255,255,0.08)" />
-    <rect x="0" y="0" width="704" height="28" rx="8" fill="rgba(255,255,255,0.03)" />
-    <circle cx="16" cy="14" r="4" fill="#ef4444" opacity="0.8"/>
-    <circle cx="28" cy="14" r="4" fill="#f59e0b" opacity="0.8"/>
-    <circle cx="40" cy="14" r="4" fill="#10b981" opacity="0.8"/>
-    <text x="56" y="18" font-family="monospace" font-size="10" fill="#64748b">execution-log</text>
-    <text x="20" y="54" font-family="monospace" font-size="11.5" fill="#38bdf8">$ python3 -m server --port 4221 --threads 16</text>
-    <text x="20" y="78" font-family="monospace" font-size="11.5" fill="#cbd5e1">[INFO] Socket bound to 0.0.0.0:4221 - Ready for persistent connections</text>
-    <text x="20" y="102" font-family="monospace" font-size="11.5" fill="#a7f3d0">[CONN] Worker-04: GET /echo/scalerschool (Accept-Encoding: gzip) -&gt; 200 OK</text>
-    <text x="20" y="126" font-family="monospace" font-size="11.5" fill="#cbd5e1">[SEC]  Worker-07: Rejected unauthorized directory traversal /../etc/passwd -&gt; 404</text>
-    <text x="20" y="150" font-family="monospace" font-size="11.5" fill="#a7f3d0">[TEST] Running full integration test suite: 54/54 PASSED (0.42s)</text>
+  <!-- Code window -->
+  <g transform="translate(40, 175)">
+    <rect width="720" height="280" rx="8" fill="#030508" stroke="rgba(255,255,255,0.08)" />
+    <!-- Window header -->
+    <rect width="720" height="34" rx="8" fill="rgba(255,255,255,0.025)" />
+    <circle cx="16" cy="17" r="4.5" fill="#ef4444" opacity="0.7"/>
+    <circle cx="30" cy="17" r="4.5" fill="#f59e0b" opacity="0.7"/>
+    <circle cx="44" cy="17" r="4.5" fill="#10b981" opacity="0.7"/>
+    <text x="64" y="21" font-family="ui-monospace, monospace" font-size="11" fill="#94a3b8">server.py</text>
+    <text x="680" y="21" font-family="ui-monospace, monospace" font-size="10" fill="#475569">Python</text>
+    <line x1="0" y1="34" x2="720" y2="34" stroke="rgba(255,255,255,0.06)" />
+    <text x="16" y="62" font-family="ui-monospace, monospace" font-size="11" fill="#334155">01</text>
+    <text x="50" y="62" font-family="ui-monospace, monospace" font-size="11.5"><tspan fill="#38bdf8">server_socket</tspan><tspan fill="#94a3b8"> = </tspan><tspan fill="#cbd5e1">socket</tspan><tspan fill="#94a3b8">.</tspan><tspan fill="#f59e0b">socket</tspan><tspan fill="#94a3b8">(socket.AF_INET, socket.SOCK_STREAM)</tspan></text>
+    <text x="16" y="84" font-family="ui-monospace, monospace" font-size="11" fill="#334155">02</text>
+    <text x="50" y="84" font-family="ui-monospace, monospace" font-size="11.5"><tspan fill="#38bdf8">server_socket</tspan><tspan fill="#94a3b8">.</tspan><tspan fill="#f59e0b">setsockopt</tspan><tspan fill="#94a3b8">(socket.SOL_SOCKET, socket.SO_REUSEADDR, </tspan><tspan fill="#a7f3d0">1</tspan><tspan fill="#94a3b8">)</tspan></text>
+    <text x="16" y="106" font-family="ui-monospace, monospace" font-size="11" fill="#334155">03</text>
+    <text x="50" y="106" font-family="ui-monospace, monospace" font-size="11.5"><tspan fill="#38bdf8">server_socket</tspan><tspan fill="#94a3b8">.</tspan><tspan fill="#f59e0b">bind</tspan><tspan fill="#94a3b8">((</tspan><tspan fill="#a7f3d0">'0.0.0.0'</tspan><tspan fill="#94a3b8">, </tspan><tspan fill="#a7f3d0">4221</tspan><tspan fill="#94a3b8">))</tspan></text>
+    <text x="16" y="128" font-family="ui-monospace, monospace" font-size="11" fill="#334155">04</text>
+    <text x="50" y="128" font-family="ui-monospace, monospace" font-size="11.5"><tspan fill="#38bdf8">server_socket</tspan><tspan fill="#94a3b8">.</tspan><tspan fill="#f59e0b">listen</tspan><tspan fill="#94a3b8">(</tspan><tspan fill="#a7f3d0">128</tspan><tspan fill="#94a3b8">)</tspan></text>
+    <text x="16" y="150" font-family="ui-monospace, monospace" font-size="11" fill="#334155">05</text>
+    <text x="50" y="150" font-family="ui-monospace, monospace" font-size="11.5"><tspan fill="#64748b"># Handle connections with thread pool concurrency</tspan></text>
+    <text x="16" y="172" font-family="ui-monospace, monospace" font-size="11" fill="#334155">06</text>
+    <text x="50" y="172" font-family="ui-monospace, monospace" font-size="11.5"><tspan fill="#c084fc">with </tspan><tspan fill="#f59e0b">ThreadPoolExecutor</tspan><tspan fill="#94a3b8">(max_workers=</tspan><tspan fill="#a7f3d0">16</tspan><tspan fill="#c084fc">) as </tspan><tspan fill="#94a3b8">executor:</tspan></text>
+    <text x="16" y="194" font-family="ui-monospace, monospace" font-size="11" fill="#334155">07</text>
+    <text x="50" y="194" font-family="ui-monospace, monospace" font-size="11.5"><tspan fill="#c084fc">    while </tspan><tspan fill="#a7f3d0">True</tspan><tspan fill="#94a3b8">:</tspan></text>
+    <text x="16" y="216" font-family="ui-monospace, monospace" font-size="11" fill="#334155">08</text>
+    <text x="50" y="216" font-family="ui-monospace, monospace" font-size="11.5"><tspan fill="#cbd5e1">        client_socket, client_addr = server_socket.</tspan><tspan fill="#f59e0b">accept</tspan><tspan fill="#94a3b8">()</tspan></text>
+    <text x="16" y="238" font-family="ui-monospace, monospace" font-size="11" fill="#334155">09</text>
+    <text x="50" y="238" font-family="ui-monospace, monospace" font-size="11.5"><tspan fill="#cbd5e1">        executor.</tspan><tspan fill="#f59e0b">submit</tspan><tspan fill="#94a3b8">(handle_http_client, client_socket)</tspan></text>
+    <text x="16" y="260" font-family="ui-monospace, monospace" font-size="11" fill="#334155">10</text>
+    <text x="50" y="260" font-family="ui-monospace, monospace" font-size="11.5"><tspan fill="#10b981">        # 54/54 integration tests passing</tspan></text>
   </g>
 </svg>

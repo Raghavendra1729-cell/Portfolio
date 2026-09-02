@@ -13,7 +13,7 @@ export default function FeaturedHighlights({
   return (
     <RevealSection id="home-highlights" className="space-y-6">
       <div className="section-badge">
-        <span>Core signal</span>
+        <span>Focus Areas</span>
       </div>
       <div className="grid gap-4 md:grid-cols-3">
         {cards.map((item, index) => (

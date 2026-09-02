@@ -208,30 +208,7 @@ export default function Projects({ data }: { data: ProjectRecord[] }) {
                       ) : null}
                     </div>
 
-                    <div className="mt-6 grid gap-3 sm:grid-cols-3">
-                      <div className="surface-cut border border-white/8 bg-white/[0.025] p-3.5">
-                        <p className="font-mono text-[0.62rem] uppercase tracking-[0.28em] text-slate-500">
-                          Stack
-                        </p>
-                        <p className="mt-2 text-sm text-slate-200">{project.techStack.length} tools</p>
-                      </div>
-                      <div className="surface-cut border border-white/8 bg-white/[0.025] p-3.5">
-                        <p className="font-mono text-[0.62rem] uppercase tracking-[0.28em] text-slate-500">
-                          Links
-                        </p>
-                        <p className="mt-2 text-sm text-slate-200">
-                          {project.links.length + Number(Boolean(project.link)) + Number(Boolean(project.repo))}
-                        </p>
-                      </div>
-                      <div className="surface-cut border border-white/8 bg-white/[0.025] p-3.5">
-                        <p className="font-mono text-[0.62rem] uppercase tracking-[0.28em] text-slate-500">
-                          Mode
-                        </p>
-                        <p className="mt-2 text-sm text-slate-200">
-                          {project.featured ? "Flagship" : "Archive"}
-                        </p>
-                      </div>
-                    </div>
+
 
                     {project.techStack.length > 0 ? (
                       <div className="mt-5 flex flex-wrap gap-2">

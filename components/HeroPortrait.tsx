@@ -125,21 +125,21 @@ export default function HeroPortrait({
         <div className="mt-4 grid gap-3 sm:grid-cols-[1fr_1fr]">
           <div className="metric-panel surface-cut rounded-[1.15rem] p-4">
             <p className="font-mono text-[0.65rem] uppercase tracking-[0.28em] text-slate-500">
-              Profile
+              Education
             </p>
-            <p className="mt-3 text-base font-semibold text-white">Developer-grade systems</p>
-            <p className="mt-2 text-sm leading-6 text-slate-400">
-              Stronger emphasis on maintainability, hierarchy, and product thinking.
+            <p className="mt-2 text-sm font-semibold text-white">Scaler &amp; BITS Pilani</p>
+            <p className="mt-1 text-xs leading-5 text-slate-400">
+              CS Undergrad (2024–2028) · CGR 9.14
             </p>
           </div>
 
           <div className="metric-panel surface-cut rounded-[1.15rem] p-4">
             <p className="font-mono text-[0.65rem] uppercase tracking-[0.28em] text-slate-500">
-              Style
+              Current Role
             </p>
-            <p className="mt-3 text-base font-semibold text-white">Sharp, dark, restrained</p>
-            <p className="mt-2 text-sm leading-6 text-slate-400">
-              Neobrutalist structure with controlled motion and low-noise presentation.
+            <p className="mt-2 text-sm font-semibold text-white">TA Buddy @ Scaler</p>
+            <p className="mt-1 text-xs leading-5 text-slate-400">
+              Mentoring 25+ cohort in DSA &amp; OOP
             </p>
           </div>
         </div>

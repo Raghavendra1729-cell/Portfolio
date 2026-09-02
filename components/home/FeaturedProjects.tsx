@@ -101,32 +101,7 @@ export default function FeaturedProjects({
                   ) : null}
                 </div>
 
-                <div className="grid gap-3 sm:grid-cols-3">
-                  <div className="surface-cut border border-white/8 bg-white/[0.025] p-3.5">
-                    <p className="font-mono text-[0.62rem] uppercase tracking-[0.28em] text-slate-500">
-                      Stack
-                    </p>
-                    <p className="mt-2 text-sm text-slate-200">{leadProject.techStack.length} tools</p>
-                  </div>
-                  <div className="surface-cut border border-white/8 bg-white/[0.025] p-3.5">
-                    <p className="font-mono text-[0.62rem] uppercase tracking-[0.28em] text-slate-500">
-                      Links
-                    </p>
-                    <p className="mt-2 text-sm text-slate-200">
-                      {leadProject.links.length +
-                        Number(Boolean(leadProject.link)) +
-                        Number(Boolean(leadProject.repo))}
-                    </p>
-                  </div>
-                  <div className="surface-cut border border-white/8 bg-white/[0.025] p-3.5">
-                    <p className="font-mono text-[0.62rem] uppercase tracking-[0.28em] text-slate-500">
-                      Mode
-                    </p>
-                    <p className="mt-2 text-sm text-slate-200">
-                      {leadProject.featured ? "Flagship" : "Selected"}
-                    </p>
-                  </div>
-                </div>
+
 
                 {leadProject.techStack.length > 0 ? (
                   <div className="flex flex-wrap gap-2">

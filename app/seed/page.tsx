@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { headers } from "next/headers";
 import { ArrowLeft, Database, ShieldAlert } from "lucide-react";
 import PageShell from "@/components/layout/PageShell";
 import { createPageMetadata } from "@/lib/metadata";
@@ -14,13 +13,10 @@ export const metadata: Metadata = createPageMetadata({
   path: "/seed",
 });
 
+// The Host and X-Forwarded-Host headers are sent by the client, so they cannot
+// be trusted to decide this. Only a development build may run the seed page.
 async function canRunSeedPage() {
-  const headerStore = await headers();
-  const host = headerStore.get("x-forwarded-host") ?? headerStore.get("host") ?? "";
-  const isLocalhost = host.includes("localhost") || host.includes("127.0.0.1");
-  const isDevelopment = process.env.NODE_ENV !== "production";
-
-  return isDevelopment || isLocalhost;
+  return process.env.NODE_ENV !== "production";
 }
 
 export default async function SeedPage() {

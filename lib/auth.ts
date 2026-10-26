@@ -69,7 +69,7 @@ export function createAdminSessionToken() {
 }
 
 export function verifyAdminSessionToken(token: string | undefined) {
-  if (!token) {
+  if (!token || !getJwtSigningSecret()) {
     return null;
   }
 
